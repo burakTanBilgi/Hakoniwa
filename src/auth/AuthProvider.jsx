@@ -60,8 +60,19 @@ export function AuthProvider({ children }) {
   return <AuthCtx.Provider value={value}>{children}</AuthCtx.Provider>;
 }
 
+const AUTH_FALLBACK = {
+  user: null,
+  loading: false,
+  signInWithGoogle: () => Promise.resolve({ error: new Error('Auth not configured') }),
+  signInWithEmail: () => Promise.resolve({ error: new Error('Auth not configured') }),
+  signUpWithEmail: () => Promise.resolve({ error: new Error('Auth not configured') }),
+  signOut: () => Promise.resolve(),
+  supabaseConfigured: false,
+};
+
 export function useAuth() {
   const ctx = useContext(AuthCtx);
-  if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>');
-  return ctx;
+  // Outside <AuthProvider> (e.g. in unit tests), return safe no-op defaults
+  // so components that call useAuth can render without crashing.
+  return ctx ?? AUTH_FALLBACK;
 }

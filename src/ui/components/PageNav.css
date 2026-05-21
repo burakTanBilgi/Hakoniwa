@@ -106,6 +106,36 @@
   outline-offset: 2px;
 }
 
+/* Language switcher — same chrome as the theme toggle, text not icon. */
+.page-nav__lang {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--bg-elev);
+  border: 1px solid var(--stroke-idle);
+  color: var(--text-muted);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease, background 200ms ease;
+  font-family: inherit;
+}
+.page-nav__lang:hover {
+  color: var(--primary-2);
+  border-color: var(--primary-2);
+  background: var(--primary-tint);
+}
+.page-nav__lang:focus-visible {
+  outline: 2px solid var(--primary-2);
+  outline-offset: 2px;
+}
+
 .page-nav__tabs {
   display: flex;
   gap: 4px;
@@ -182,7 +212,7 @@
 @media (max-width: 520px) {
   .page-nav { padding: 7px 10px; gap: 6px; }
   .page-nav__title { display: none; }
-  .page-nav__theme { width: 28px; height: 28px; font-size: 13px; }
+  .page-nav__theme, .page-nav__lang { width: 28px; height: 28px; font-size: 13px; }
   .page-nav__tabs { height: 30px; gap: 2px; padding: 2px; }
   .page-nav__tab { padding: 0 7px; height: 24px; }
 }
@@ -194,5 +224,5 @@
   .page-nav__tab { height: 34px; padding: 0 12px; }
   .page-nav__tab .page-nav__icon { font-size: 15px; }
   .page-nav__tabs { height: 40px; padding: 3px; }
-  .page-nav__theme { width: 36px; height: 36px; font-size: 15px; }
+  .page-nav__theme, .page-nav__lang { width: 36px; height: 36px; font-size: 15px; }
 }
