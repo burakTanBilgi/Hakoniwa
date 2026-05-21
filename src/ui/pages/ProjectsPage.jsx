@@ -4,10 +4,13 @@ import Tooltip from '../components/Tooltip.jsx';
 import { formatTime } from '../utils/formatTime.js';
 import WaveBrandMark from '../components/meta/WaveBrandMark.jsx';
 import WaveDivider from '../components/meta/WaveDivider.jsx';
+import { useT, useLang } from '../../i18n/index.js';
 
 // Project library: tiles for every saved project plus an Import control.
 // Export options live on the Preview page (one-shot, per project).
 export default function ProjectsPage({ project, onNav }) {
+  const t = useT();
+  const { lang } = useLang();
   const {
     project: p,
     projects,
@@ -70,7 +73,7 @@ export default function ProjectsPage({ project, onNav }) {
                   </div>
                   <div className="project-tile__name">{proj.name || 'Untitled'}</div>
                   <div className="project-tile__meta">
-                    {proj.grid.rows}×{proj.grid.cols} · {formatTime(proj.updatedAt)}
+                    {proj.grid.rows}×{proj.grid.cols} · {formatTime(proj.updatedAt, t, lang)}
                   </div>
                 </button>
                 <Tooltip label="Delete project">

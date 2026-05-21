@@ -4,11 +4,14 @@ import { exportSingleFileJSX, exportModuleZip } from '../../grid/export.js';
 import { formatTime } from '../utils/formatTime.js';
 import WaveBrandMark from '../components/meta/WaveBrandMark.jsx';
 import WaveDivider from '../components/meta/WaveDivider.jsx';
+import { useT, useLang } from '../../i18n/index.js';
 
 // Large preview of the current project. Big board, easy navigation to editors,
 // and export options (per-project, so they live with the project view).
 export default function PreviewPage({ project, onNav }) {
   const { project: p, setName, exportCurrent } = project;
+  const t = useT();
+  const { lang } = useLang();
   const [editingName, setEditingName] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
 
@@ -84,7 +87,7 @@ export default function PreviewPage({ project, onNav }) {
         <p className="preview-info__meta">
           <span>{p.grid.rows}×{p.grid.cols} grid</span>
           <span aria-hidden> · </span>
-          <span>last edited {formatTime(p.updatedAt)}</span>
+          <span>last edited {formatTime(p.updatedAt, t, lang)}</span>
         </p>
 
         <WaveDivider amplitude={4} height={14} />
