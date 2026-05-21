@@ -59,7 +59,13 @@ export default function PageNav({ page, onNav, projectName, theme, onToggleTheme
         ))}
       </nav>
     </header>
-    <WaveDivider className="page-nav-wave" height={10} amplitude={3} strokeWidth={1.25} />
+    <WaveDivider
+      className="page-nav-wave"
+      height={12}
+      amplitude={4}
+      strokeWidth={1.25}
+      fillTop="var(--page-nav-bg)"
+    />
     </>
   );
 }

@@ -1,3 +1,10 @@
+/* Single source of truth for the nav's surface colour — shared by the
+   bar itself and the wave divider's fill so the wavy edge is the same
+   colour as the bar and the two read as one continuous shape. */
+:root {
+  --page-nav-bg: color-mix(in srgb, var(--bg-elev) 85%, transparent);
+}
+
 .page-nav {
   display: flex;
   align-items: center;
@@ -5,7 +12,7 @@
   /* Honour iPhone notch / Dynamic Island safe areas on the top edge
      while keeping the desktop padding stable. */
   padding: max(10px, env(safe-area-inset-top, 10px)) 20px 10px;
-  background: color-mix(in srgb, var(--bg-elev) 85%, transparent);
+  background: var(--page-nav-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 10;
@@ -15,12 +22,13 @@
   min-width: 0;
 }
 
-/* Wave seam under the nav — replaces the old 1px border with a real
-   Hakoniwa wave path so every page sits under our own visual language. */
+/* The nav's wavy bottom edge. The wave is FILLED with --page-nav-bg
+   (see WaveDivider's fillTop prop), so the bar appears to end in a wave
+   rather than a straight line — a seamless transition into the page
+   below instead of a stroke floating in the gap. */
 .page-nav-wave {
-  height: 10px;
+  height: 12px;
   margin-bottom: -2px;       /* tuck slightly into the page below */
-  color: var(--stroke-idle);
 }
 
 .page-nav__brand {
