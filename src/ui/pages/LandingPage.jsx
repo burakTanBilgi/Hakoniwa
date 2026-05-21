@@ -1,27 +1,7 @@
 import WaveBrandMark from '../components/meta/WaveBrandMark.jsx';
 import WaveDivider   from '../components/meta/WaveDivider.jsx';
 import MetaCardRow   from '../components/meta/MetaCardRow.jsx';
-
-const FEATURE_CARDS = [
-  {
-    id: 'feat-build',
-    icon: '⚏',
-    title: 'Build with pieces',
-    body: 'Drag-select cells in a grid and merge them into custom pieces.',
-  },
-  {
-    id: 'feat-edges',
-    icon: '✎',
-    title: 'Style every edge',
-    body: 'Three connector styles — puzzle, wave, straight — with per-edge overrides for color, opacity, and width.',
-  },
-  {
-    id: 'feat-export',
-    icon: '⤓',
-    title: 'Export anywhere',
-    body: 'Ship as JSON, a single self-contained React file, or a drop-in module bundle.',
-  },
-];
+import { useT } from '../../i18n/index.js';
 
 // Decorative SVG background — soft floating puzzle silhouettes that drift
 // behind the hero. Pure CSS animation on each `<path>` so the rest of the
@@ -79,19 +59,39 @@ function LandingBackdrop() {
 }
 
 export default function LandingPage({ onNav }) {
+  const t = useT();
+
+  const featureCards = [
+    {
+      id: 'feat-build',
+      icon: '⚏',
+      title: t('landing.feat.buildTitle'),
+      body: t('landing.feat.buildBody'),
+    },
+    {
+      id: 'feat-edges',
+      icon: '✎',
+      title: t('landing.feat.edgesTitle'),
+      body: t('landing.feat.edgesBody'),
+    },
+    {
+      id: 'feat-export',
+      icon: '⤓',
+      title: t('landing.feat.exportTitle'),
+      body: t('landing.feat.exportBody'),
+    },
+  ];
+
   return (
     <div className="page-landing">
       <LandingBackdrop />
 
       <section className="landing-hero">
         <div className="landing-hero__mark"><WaveBrandMark size="lg" /></div>
-        <p className="landing-hero__sub">箱庭 · built with itself</p>
+        <p className="landing-hero__sub">{t('landing.heroSub')}</p>
         <h1 className="landing-hero__name">Hakoniwa</h1>
         <p className="landing-hero__tagline">
-          Design layouts that snap together — puzzle tabs &amp; sockets,
-          soft waves, or clean straight lines. Build a grid, merge cells into
-          pieces, fill them with text or images, and export as JSON, a single
-          React file, or a full module bundle.
+          {t('landing.tagline')}
         </p>
         <div className="landing-hero__ctas">
           <button
@@ -99,7 +99,7 @@ export default function LandingPage({ onNav }) {
             className="action-btn action-btn--primary landing-cta"
             onClick={() => onNav('projects')}
           >
-            <span>Open the app</span>
+            <span>{t('landing.openApp')}</span>
             <span className="landing-cta__arrow" aria-hidden="true">→</span>
           </button>
           <button
@@ -107,7 +107,7 @@ export default function LandingPage({ onNav }) {
             className="action-btn action-btn--ghost"
             onClick={() => onNav('docs')}
           >
-            Read the docs
+            {t('landing.readDocs')}
           </button>
         </div>
       </section>
@@ -115,7 +115,7 @@ export default function LandingPage({ onNav }) {
       <WaveDivider amplitude={8} />
 
       <section className="landing-features">
-        <MetaCardRow cards={FEATURE_CARDS} />
+        <MetaCardRow cards={featureCards} />
       </section>
 
       <WaveDivider amplitude={8} flip />
@@ -126,7 +126,7 @@ export default function LandingPage({ onNav }) {
           className="landing-foot__cta"
           onClick={() => onNav('docs')}
         >
-          <span>Continue to docs</span>
+          <span>{t('landing.continueToDocs')}</span>
           <span className="landing-foot__arrow" aria-hidden="true">↓</span>
         </button>
       </section>

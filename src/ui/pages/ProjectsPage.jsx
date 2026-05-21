@@ -26,7 +26,7 @@ export default function ProjectsPage({ project, onNav }) {
     e.target.value = '';
     if (!file) return;
     try { await importFromFile(file); }
-    catch (err) { alert('Could not import: ' + err.message); }
+    catch (err) { alert(t('errors.importFailed', { detail: err.message })); }
   };
 
   const handleOpen = (id) => {
@@ -41,11 +41,11 @@ export default function ProjectsPage({ project, onNav }) {
           <WaveBrandMark size="md" />
         </div>
         <div className="projects-section__head">
-          <h2 className="projects-section__title">Your Projects</h2>
+          <h2 className="projects-section__title">{t('projects.yourProjects')}</h2>
           <div className="projects-section__actions">
             <input ref={fileRef} type="file" accept=".json" hidden onChange={handleImport} />
             <button type="button" className="action-btn" onClick={() => fileRef.current?.click()}>
-              ↑ Import JSON
+              {t('projects.importJson')}
             </button>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function ProjectsPage({ project, onNav }) {
             onClick={() => { createNew(); onNav('preview'); }}
           >
             <div className="project-tile__plus">+</div>
-            <div className="project-tile__name">New project</div>
+            <div className="project-tile__name">{t('projects.newProject')}</div>
           </button>
 
           {[...projects].sort((a, b) => b.updatedAt - a.updatedAt).map((proj) => {
@@ -71,15 +71,15 @@ export default function ProjectsPage({ project, onNav }) {
                   <div className="project-tile__preview">
                     <PreviewSvg project={proj} maxSize={140} />
                   </div>
-                  <div className="project-tile__name">{proj.name || 'Untitled'}</div>
+                  <div className="project-tile__name">{proj.name || t('projects.untitled')}</div>
                   <div className="project-tile__meta">
                     {proj.grid.rows}×{proj.grid.cols} · {formatTime(proj.updatedAt, t, lang)}
                   </div>
                 </button>
-                <Tooltip label="Delete project">
+                <Tooltip label={t('projects.deleteTooltip')}>
                   <button type="button" className="project-tile__del"
-                    aria-label="Delete project"
-                    onClick={() => { if (confirm(`Delete "${proj.name}"?`)) removeProject(proj.id); }}>
+                    aria-label={t('projects.deleteAriaLabel')}
+                    onClick={() => { if (confirm(t('projects.confirmDelete', { name: proj.name }))) removeProject(proj.id); }}>
                     ✕
                   </button>
                 </Tooltip>

@@ -37,7 +37,7 @@ export default function PreviewPage({ project, onNav }) {
               className="action-btn"
               onClick={() => setExportOpen((v) => !v)}
             >
-              ↓ Export ▾
+              {t('preview.exportButton')}
             </button>
             {exportOpen && (
               <>
@@ -45,18 +45,18 @@ export default function PreviewPage({ project, onNav }) {
                 <div className="export-menu__panel">
                   <button type="button" className="export-menu__item"
                     onClick={() => { exportCurrent(); setExportOpen(false); }}>
-                    <strong>JSON</strong>
-                    <span>Project file (re-importable)</span>
+                    <strong>{t('preview.exportJson')}</strong>
+                    <span>{t('preview.exportJsonHint')}</span>
                   </button>
                   <button type="button" className="export-menu__item"
                     onClick={() => { exportSingleFileJSX(p); setExportOpen(false); }}>
-                    <strong>Single-file React</strong>
-                    <span>One .jsx + README — drop into any React 18+ project</span>
+                    <strong>{t('preview.exportSingleFile')}</strong>
+                    <span>{t('preview.exportSingleFileHint')}</span>
                   </button>
                   <button type="button" className="export-menu__item"
                     onClick={() => { exportModuleZip(p); setExportOpen(false); }}>
-                    <strong>Module bundle (ZIP)</strong>
-                    <span>Full puzzle/ folder + project.json + README</span>
+                    <strong>{t('preview.exportModuleZip')}</strong>
+                    <span>{t('preview.exportModuleZipHint')}</span>
                   </button>
                 </div>
               </>
@@ -80,14 +80,14 @@ export default function PreviewPage({ project, onNav }) {
             className="preview-info__name"
             onClick={() => setEditingName(true)}
           >
-            {p.name || 'Untitled'}
+            {p.name || t('preview.untitled')}
           </h1>
         )}
 
         <p className="preview-info__meta">
-          <span>{p.grid.rows}×{p.grid.cols} grid</span>
+          <span>{t('preview.grid', { rows: p.grid.rows, cols: p.grid.cols })}</span>
           <span aria-hidden> · </span>
-          <span>last edited {formatTime(p.updatedAt, t, lang)}</span>
+          <span>{t('preview.lastEdited', { time: formatTime(p.updatedAt, t, lang) })}</span>
         </p>
 
         <WaveDivider amplitude={4} height={14} />
@@ -98,19 +98,19 @@ export default function PreviewPage({ project, onNav }) {
             className="action-btn action-btn--primary"
             onClick={() => onNav('grid')}
           >
-            ⊞ Edit grid
+            {t('preview.editGrid')}
           </button>
           <button
             type="button"
             className="action-btn action-btn--primary"
             onClick={() => onNav('edit')}
           >
-            ✎ Edit pieces
+            {t('preview.editPieces')}
           </button>
         </div>
 
         <p className="hint">
-          Edit the grid layout, or open the Edit page to style edges and fill cells with text/images.
+          {t('preview.hint')}
         </p>
       </aside>
     </div>
