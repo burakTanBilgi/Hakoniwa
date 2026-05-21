@@ -6,6 +6,15 @@ A React + Vite design tool for grid-based layouts where sections are separated b
 
 **Live at [hak10iwa.netlify.app](https://hak10iwa.netlify.app).**
 
+## Design docs
+
+Design specs and references live in **`docs/`** — read the relevant one
+before changing a feature it covers.
+
+- [`docs/design-system.md`](docs/design-system.md) — visual language, tokens, components
+- [`docs/adaptive-edit-ui-design.md`](docs/adaptive-edit-ui-design.md) — the four Edit-UI layout modes
+- [`docs/multi-language-support-design.md`](docs/multi-language-support-design.md) — i18n (English + Turkish)
+
 ## Architecture
 
 ```
