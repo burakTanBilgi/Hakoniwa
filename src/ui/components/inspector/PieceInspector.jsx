@@ -10,22 +10,21 @@ import Tooltip from '../Tooltip.jsx';
 import { useFileInput } from '../../hooks/useFileInput.js';
 import { FIT_OPTIONS } from '../../utils/fitOptions.js';
 import { DEFAULT_WAVE } from '../edges/constants.js';
+import { useT } from '../../../i18n/index.js';
 
 // Doxa picker is heavy (modal + Supabase query layer) and only matters
 // when a piece is being assigned a Doxa embed — lazy-load so the
 // Inspector chunk stays light.
 const DoxaEmbedPicker = lazy(() => import('../../../embeds/DoxaEmbedPicker.jsx'));
 
-const TABS = [
-  { id: 'content', label: 'Content' },
-  { id: 'body',    label: 'Body'    },
-  { id: 'edges',   label: 'Edges'   },
-];
+// Tab ids — labels are resolved from i18n at render time
+const TAB_IDS = ['content', 'body', 'edges'];
 
-const ALIGN_OPTIONS = [
-  { value: 'left',   icon: 'align-left',   label: 'Align left'   },
-  { value: 'center', icon: 'align-center', label: 'Align center' },
-  { value: 'right',  icon: 'align-right',  label: 'Align right'  },
+// Align option values — labels are resolved from i18n at render time
+const ALIGN_OPTION_VALUES = [
+  { value: 'left',   icon: 'align-left',   labelKey: 'inspector.content.alignLeft'   },
+  { value: 'center', icon: 'align-center', labelKey: 'inspector.content.alignCenter' },
+  { value: 'right',  icon: 'align-right',  labelKey: 'inspector.content.alignRight'  },
 ];
 
 // Body of the "Piece" accordion card. Renders the three-tab editor
@@ -44,6 +43,8 @@ export default function PieceInspector({
   // edges
   setPieceEdgeEffect, setPieceEdgeConfig, setPieceEdgeEffects, clearPieceEdgeOverride,
 }) {
+  const t = useT();
+
   const edges = project.edges;
   const defaultEdgeEffect = edges.default.effect;
   const defaultEdgeConfig = edges.default.config ?? DEFAULT_WAVE;
@@ -56,21 +57,23 @@ export default function PieceInspector({
   const defaultCellEffects = project?.cells?.default?.effects || {};
   const pieceCellEffects   = project?.cells?.byPiece?.[piece.id]?.effects || {};
 
+  const tabs = TAB_IDS.map((id) => ({ id, label: t(`inspector.tab.${id}`) }));
+
   return (
     <>
       <div className="inspector-header">
         <div>
-          <span className="inspector-header__kind">Piece</span>
+          <span className="inspector-header__kind">{t('inspector.pieceKind')}</span>
           <span className="inspector-header__title">{piece.label || piece.id}</span>
         </div>
-        <Tooltip label="Clear selection">
-          <button type="button" className="icon-action-btn" aria-label="Clear selection" onClick={onClearSelection}>
+        <Tooltip label={t('inspector.clearSelection')}>
+          <button type="button" className="icon-action-btn" aria-label={t('inspector.clearSelection')} onClick={onClearSelection}>
             <Icon name="close" size={13} />
           </button>
         </Tooltip>
       </div>
 
-      <InspectorTabs tabs={TABS} active={activeTab} onPick={onChangeTab} />
+      <InspectorTabs tabs={tabs} active={activeTab} onPick={onChangeTab} />
 
       {activeTab === 'content' && (
         <SubcardAccordion id="piece-content" defaultOpenId="content">
@@ -85,7 +88,7 @@ export default function PieceInspector({
       {activeTab === 'body' && (
         <SubcardAccordion id="piece-body" defaultOpenId="body-animations">
           <CellTierEditor
-            title="This piece's body"
+            title={t('inspector.piecesBodyTitle')}
             accent
             ownEffects={pieceCellEffects}
             inheritedEffects={defaultCellEffects}
@@ -97,7 +100,7 @@ export default function PieceInspector({
       {activeTab === 'edges' && (
         <SubcardAccordion id="piece-edges" defaultOpenId="shape-stroke">
           <EdgeTierEditor
-            title="This piece's edges"
+            title={t('inspector.piecesEdgesTitle')}
             accent
             effect={pieceEdgeEffect}
             config={pieceEdgeConfig}
@@ -116,6 +119,7 @@ export default function PieceInspector({
 }
 
 function ContentTab({ piece, setPieceContent, updatePieceContent }) {
+  const t = useT();
   const content = piece.content || null;
   const textareaRef = useRef(null);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -167,16 +171,25 @@ function ContentTab({ piece, setPieceContent, updatePieceContent }) {
 
   const { inputProps, open } = useFileInput(handleImageFile);
 
+  const contentTypeChips = [
+    { v: 'none',       l: t('inspector.content.typeEmpty') },
+    { v: 'text',       l: t('inspector.content.typeText')  },
+    { v: 'image',      l: t('inspector.content.typeImage') },
+    { v: 'doxa-embed', l: t('inspector.content.typeDoxa')  },
+  ];
+
+  const alignOptions = ALIGN_OPTION_VALUES.map((a) => ({ ...a, label: t(a.labelKey) }));
+
   return (
     <InspectorSubcard
       id="content"
-      title="Content"
+      title={t('inspector.content.title')}
       accent
       actions={content
         ? (
-          <Tooltip label="Clear content">
+          <Tooltip label={t('inspector.content.clearContent')}>
             <button type="button" className="icon-action-btn icon-action-btn--danger"
-              aria-label="Clear content"
+              aria-label={t('inspector.content.clearContent')}
               onClick={() => setPieceContent(piece.id, null)}>
               <Icon name="trash" size={13} />
             </button>
@@ -185,30 +198,25 @@ function ContentTab({ piece, setPieceContent, updatePieceContent }) {
         : null}
     >
       <div className="effect-chips">
-        {[
-          { v: 'none',       l: 'Empty' },
-          { v: 'text',       l: 'Text'  },
-          { v: 'image',      l: 'Image' },
-          { v: 'doxa-embed', l: 'Doxa'  },
-        ].map((t) => (
-          <button key={t.v} type="button"
-            className={`chip chip--sm ${(content?.type || 'none') === t.v ? 'chip--active' : ''}`}
-            onClick={() => setType(t.v)}>
-            {t.l}
+        {contentTypeChips.map((chip) => (
+          <button key={chip.v} type="button"
+            className={`chip chip--sm ${(content?.type || 'none') === chip.v ? 'chip--active' : ''}`}
+            onClick={() => setType(chip.v)}>
+            {chip.l}
           </button>
         ))}
       </div>
 
       {content?.type === 'doxa-embed' && (
         <div className="content-config">
-          <p className="hint">{summarizeDoxaView(content.view)}</p>
+          <p className="hint">{summarizeDoxaView(content.view, t)}</p>
           <button
             type="button"
             className="action-btn action-btn--ghost"
             onClick={() => setPickerOpen(true)}
           >
             <Icon name="upload" size={14} />
-            <span>Pick another chart</span>
+            <span>{t('inspector.content.pickAnotherChart')}</span>
           </button>
         </div>
       )}
@@ -231,14 +239,14 @@ function ContentTab({ piece, setPieceContent, updatePieceContent }) {
             ref={textareaRef}
             className="modal__textarea"
             style={{ minHeight: 80 }}
-            placeholder="Enter text…"
+            placeholder={t('inspector.content.textPlaceholder')}
             value={content.text || ''}
             onChange={(e) => updatePieceContent(piece.id, { text: e.target.value })}
           />
           <div className="form-row">
-            <label className="form-row__label">Align</label>
+            <label className="form-row__label">{t('inspector.content.alignLabel')}</label>
             <div className="effect-chips effect-chips--icons">
-              {ALIGN_OPTIONS.map((a) => (
+              {alignOptions.map((a) => (
                 <Tooltip key={a.value} label={a.label}>
                   <button type="button"
                     className={`chip chip--icon ${(content.align || 'center') === a.value ? 'chip--active' : ''}`}
@@ -252,13 +260,13 @@ function ContentTab({ piece, setPieceContent, updatePieceContent }) {
             </div>
           </div>
           <SliderRow
-            label="Size"
+            label={t('inspector.content.sizeLabel')}
             min={8} max={64} step={1}
             value={Math.round(content.fontSize || Math.min(piece.w, piece.h) / 8)}
             onChange={(v) => updatePieceContent(piece.id, { fontSize: v })}
           />
           <div className="form-row">
-            <label className="form-row__label">Color</label>
+            <label className="form-row__label">{t('inspector.content.colorLabel')}</label>
             <input
               type="color"
               className="form-row__color"
@@ -274,16 +282,16 @@ function ContentTab({ piece, setPieceContent, updatePieceContent }) {
           <input {...inputProps} type="file" accept="image/*" hidden />
           <button type="button" className="action-btn action-btn--ghost" onClick={open}>
             <Icon name="upload" size={14} />
-            <span>{content.src ? 'Replace image' : 'Upload image'}</span>
+            <span>{content.src ? t('inspector.content.replaceImage') : t('inspector.content.uploadImage')}</span>
           </button>
 
           {content.src && (
             <>
               <div className="image-preview">
-                <img src={content.src} alt="preview" />
+                <img src={content.src} alt={t('inspector.content.imagePreviewAlt')} />
               </div>
               <div className="form-row">
-                <label className="form-row__label">Fit</label>
+                <label className="form-row__label">{t('inspector.content.fitLabel')}</label>
                 <div className="effect-chips">
                   {FIT_OPTIONS.map((f) => (
                     <Tooltip key={f.value} label={f.hint}>
@@ -304,11 +312,11 @@ function ContentTab({ piece, setPieceContent, updatePieceContent }) {
   );
 }
 
-// Plain-English summary of a Doxa embed view, shown beneath the type
-// picker so the user can see at a glance what's currently embedded.
-function summarizeDoxaView(view) {
-  if (!view) return 'No chart picked yet.';
-  if (view.kind === 'chart')      return `Single chart (id ${view.chartId})`;
-  if (view.kind === 'comparison') return `Comparison of ${view.chartIds?.length || 0} charts`;
-  return `Unknown view kind: ${view.kind}`;
+// Summary of a Doxa embed view, shown beneath the type picker so the user
+// can see at a glance what's currently embedded.
+function summarizeDoxaView(view, t) {
+  if (!view) return t('inspector.content.noChartPicked');
+  if (view.kind === 'chart')      return t('inspector.content.singleChart', { id: view.chartId });
+  if (view.kind === 'comparison') return t('inspector.content.comparisonCharts', { n: view.chartIds?.length || 0 });
+  return t('inspector.content.unknownViewKind', { kind: view.kind });
 }

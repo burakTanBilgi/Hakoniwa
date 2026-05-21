@@ -199,4 +199,83 @@ export default {
   'editUi.animateDefaultEdgesTitle': 'Default edges',
   'editUi.animateDefaultBodyTitle': 'Default body',
   'editUi.layersPanelAriaLabel': 'Layers',
+
+  // inspector — cascade strip
+  'inspector.cascadeAriaLabel': 'Override cascade',
+  'inspector.tier.default': 'Default',
+  'inspector.tier.inner': 'Inner',
+  'inspector.tier.outer': 'Outer',
+  'inspector.tier.piece': 'Piece',
+  'inspector.tier.edge': 'Edge',
+  'inspector.tierStatus.notApplicable': '{label}: not applicable for this selection',
+  'inspector.tierStatus.overrideSet': '{label}: override set',
+  'inspector.tierStatus.inheriting': '{label}: inheriting',
+
+  // inspector — source pill
+  'inspector.sourcePill.editAt': 'Edit at: {label}',
+  'inspector.sourcePill.from': 'from {label}',
+
+  // inspector — piece inspector
+  'inspector.pieceKind': 'Piece',
+  'inspector.clearSelection': 'Clear selection',
+  'inspector.tab.content': 'Content',
+  'inspector.tab.body': 'Body',
+  'inspector.tab.edges': 'Edges',
+  'inspector.content.title': 'Content',
+  'inspector.content.clearContent': 'Clear content',
+  'inspector.content.typeEmpty': 'Empty',
+  'inspector.content.typeText': 'Text',
+  'inspector.content.typeImage': 'Image',
+  'inspector.content.typeDoxa': 'Doxa',
+  'inspector.content.pickAnotherChart': 'Pick another chart',
+  'inspector.content.textPlaceholder': 'Enter text…',
+  'inspector.content.alignLabel': 'Align',
+  'inspector.content.alignLeft': 'Align left',
+  'inspector.content.alignCenter': 'Align center',
+  'inspector.content.alignRight': 'Align right',
+  'inspector.content.sizeLabel': 'Size',
+  'inspector.content.colorLabel': 'Color',
+  'inspector.content.fitLabel': 'Fit',
+  'inspector.content.replaceImage': 'Replace image',
+  'inspector.content.uploadImage': 'Upload image',
+  'inspector.content.noChartPicked': 'No chart picked yet.',
+  'inspector.content.singleChart': 'Single chart (id {id})',
+  'inspector.content.comparisonCharts': 'Comparison of {n} charts',
+  'inspector.content.unknownViewKind': 'Unknown view kind: {kind}',
+  'inspector.content.imagePreviewAlt': 'preview',
+  'inspector.piecesEdgesTitle': "This piece's edges",
+  'inspector.piecesBodyTitle': "This piece's body",
+
+  // inspector — edge inspector
+  'inspector.edgeKind': 'Edge',
+  'inspector.selectedEdge': 'Selected edge',
+  'inspector.edges.count': '{n} edges',
+  'inspector.edgeOuter': 'Outer · {label}',
+  'inspector.thisEdge': 'This edge',
+
+  // inspector — edge tier editor
+  'inspector.shapeStroke': 'Shape & stroke',
+  'inspector.animations': 'Animations',
+  'inspector.reset': 'Reset',
+  'inspector.connectorEffect': 'Connector effect',
+  'inspector.invertOrientation': 'Invert tab / socket orientation',
+  'inspector.waveFrequency': 'Wave frequency',
+  'inspector.waveAmplitude': 'Wave amplitude',
+  'inspector.mixed': 'mixed',
+
+  // inspector — cell tier editor
+  'inspector.bodyAnimations': 'Body animations',
+
+  // inspector — project defaults card
+  'inspector.defaultEdges': 'Default edges',
+  'inspector.defaultBody': 'Default body',
+
+  // inspector — inspector.jsx inner/outer tier labels
+  'inspector.innerEdges': 'Inner edges',
+  'inspector.outerEdges': 'Outer edges',
+
+  // effect names (used as chip labels / aria-labels in the edge tier editor)
+  'inspector.effect.puzzle': 'Puzzle',
+  'inspector.effect.wave': 'Wave',
+  'inspector.effect.straight': 'Straight',
 };

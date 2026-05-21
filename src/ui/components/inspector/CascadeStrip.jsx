@@ -1,4 +1,5 @@
 import Tooltip from '../Tooltip.jsx';
+import { useT } from '../../../i18n/index.js';
 
 // Sticky horizontal cascade visualization at the top of the Inspector.
 // Renders one pill per tier in priority order (left → right is *low → high*
@@ -13,12 +14,14 @@ import Tooltip from '../Tooltip.jsx';
 //                 the inspector currently has focus on (for the highlight)
 //   onSelectTier(tier) — user clicked a pill; parent shows that tier's editor
 export default function CascadeStrip({ states, currentTier, onSelectTier }) {
+  const t = useT();
+
   const order = [
-    { id: 'default', label: 'Default' },
-    { id: 'inner',   label: 'Inner'   },
-    { id: 'outer',   label: 'Outer'   },
-    { id: 'piece',   label: 'Piece'   },
-    { id: 'edge',    label: 'Edge'    },
+    { id: 'default', label: t('inspector.tier.default') },
+    { id: 'inner',   label: t('inspector.tier.inner')   },
+    { id: 'outer',   label: t('inspector.tier.outer')   },
+    { id: 'piece',   label: t('inspector.tier.piece')   },
+    { id: 'edge',    label: t('inspector.tier.edge')    },
   ];
 
   const visible = order.filter((t) => {
@@ -30,10 +33,10 @@ export default function CascadeStrip({ states, currentTier, onSelectTier }) {
   });
 
   return (
-    <nav className="cascade-strip" aria-label="Override cascade" role="tablist">
-      {visible.map((t) => {
-        const st = states?.[t.id] || { applicable: false, hasOverride: false };
-        const isCurrent = currentTier === t.id;
+    <nav className="cascade-strip" aria-label={t('inspector.cascadeAriaLabel')} role="tablist">
+      {visible.map((tier) => {
+        const st = states?.[tier.id] || { applicable: false, hasOverride: false };
+        const isCurrent = currentTier === tier.id;
         const classes = [
           'cascade-strip__pill',
           st.applicable ? '' : 'cascade-strip__pill--na',
@@ -41,22 +44,22 @@ export default function CascadeStrip({ states, currentTier, onSelectTier }) {
           isCurrent ? 'cascade-strip__pill--current' : '',
         ].filter(Boolean).join(' ');
         const tipLabel = !st.applicable
-          ? `${t.label}: not applicable for this selection`
+          ? t('inspector.tierStatus.notApplicable', { label: tier.label })
           : st.hasOverride
-            ? `${t.label}: override set`
-            : `${t.label}: inheriting`;
+            ? t('inspector.tierStatus.overrideSet', { label: tier.label })
+            : t('inspector.tierStatus.inheriting', { label: tier.label });
         return (
-          <Tooltip key={t.id} label={tipLabel}>
+          <Tooltip key={tier.id} label={tipLabel}>
             <button
               type="button"
               role="tab"
               aria-selected={isCurrent}
               className={classes}
               disabled={!st.applicable}
-              onClick={() => st.applicable && onSelectTier?.(t.id)}
+              onClick={() => st.applicable && onSelectTier?.(tier.id)}
             >
               <span className="cascade-strip__dot" aria-hidden />
-              {t.label}
+              {tier.label}
             </button>
           </Tooltip>
         );

@@ -198,4 +198,83 @@ export default {
   'editUi.animateDefaultEdgesTitle': 'Varsayılan kenarlar',
   'editUi.animateDefaultBodyTitle': 'Varsayılan gövde',
   'editUi.layersPanelAriaLabel': 'Katmanlar',
+
+  // denetçi — basamak şeridi
+  'inspector.cascadeAriaLabel': 'Geçersiz kılma basamağı',
+  'inspector.tier.default': 'Varsayılan',
+  'inspector.tier.inner': 'İç',
+  'inspector.tier.outer': 'Dış',
+  'inspector.tier.piece': 'Parça',
+  'inspector.tier.edge': 'Kenar',
+  'inspector.tierStatus.notApplicable': '{label}: bu seçim için geçerli değil',
+  'inspector.tierStatus.overrideSet': '{label}: geçersiz kılma ayarlandı',
+  'inspector.tierStatus.inheriting': '{label}: kalıtılıyor',
+
+  // denetçi — kaynak hapsı
+  'inspector.sourcePill.editAt': 'Düzenle: {label}',
+  'inspector.sourcePill.from': '{label} kaynağından',
+
+  // denetçi — parça denetçisi
+  'inspector.pieceKind': 'Parça',
+  'inspector.clearSelection': 'Seçimi temizle',
+  'inspector.tab.content': 'İçerik',
+  'inspector.tab.body': 'Gövde',
+  'inspector.tab.edges': 'Kenarlar',
+  'inspector.content.title': 'İçerik',
+  'inspector.content.clearContent': 'İçeriği temizle',
+  'inspector.content.typeEmpty': 'Boş',
+  'inspector.content.typeText': 'Metin',
+  'inspector.content.typeImage': 'Resim',
+  'inspector.content.typeDoxa': 'Doxa',
+  'inspector.content.pickAnotherChart': 'Başka bir grafik seç',
+  'inspector.content.textPlaceholder': 'Metin girin…',
+  'inspector.content.alignLabel': 'Hizala',
+  'inspector.content.alignLeft': 'Sola hizala',
+  'inspector.content.alignCenter': 'Ortaya hizala',
+  'inspector.content.alignRight': 'Sağa hizala',
+  'inspector.content.sizeLabel': 'Boyut',
+  'inspector.content.colorLabel': 'Renk',
+  'inspector.content.fitLabel': 'Sığdırma',
+  'inspector.content.replaceImage': 'Resmi değiştir',
+  'inspector.content.uploadImage': 'Resim yükle',
+  'inspector.content.noChartPicked': 'Henüz grafik seçilmedi.',
+  'inspector.content.singleChart': 'Tek grafik (kimlik {id})',
+  'inspector.content.comparisonCharts': '{n} grafiğin karşılaştırması',
+  'inspector.content.unknownViewKind': 'Bilinmeyen görünüm türü: {kind}',
+  'inspector.content.imagePreviewAlt': 'önizleme',
+  'inspector.piecesEdgesTitle': 'Bu parçanın kenarları',
+  'inspector.piecesBodyTitle': 'Bu parçanın gövdesi',
+
+  // denetçi — kenar denetçisi
+  'inspector.edgeKind': 'Kenar',
+  'inspector.selectedEdge': 'Seçili kenar',
+  'inspector.edges.count': '{n} kenar',
+  'inspector.edgeOuter': 'Dış · {label}',
+  'inspector.thisEdge': 'Bu kenar',
+
+  // denetçi — kenar katmanı düzenleyicisi
+  'inspector.shapeStroke': 'Şekil ve çizgi',
+  'inspector.animations': 'Animasyonlar',
+  'inspector.reset': 'Sıfırla',
+  'inspector.connectorEffect': 'Bağlayıcı efekti',
+  'inspector.invertOrientation': 'Çıkıntı / yuva yönünü ters çevir',
+  'inspector.waveFrequency': 'Dalga frekansı',
+  'inspector.waveAmplitude': 'Dalga genliği',
+  'inspector.mixed': 'karışık',
+
+  // denetçi — hücre katmanı düzenleyicisi
+  'inspector.bodyAnimations': 'Gövde animasyonları',
+
+  // denetçi — proje varsayılanları kartı
+  'inspector.defaultEdges': 'Varsayılan kenarlar',
+  'inspector.defaultBody': 'Varsayılan gövde',
+
+  // denetçi — iç/dış katman etiketleri
+  'inspector.innerEdges': 'İç kenarlar',
+  'inspector.outerEdges': 'Dış kenarlar',
+
+  // efekt adları (kenar katmanı düzenleyicisindeki çip etiketleri / aria-etiketleri)
+  'inspector.effect.puzzle': 'Yapboz',
+  'inspector.effect.wave': 'Dalga',
+  'inspector.effect.straight': 'Düz',
 };

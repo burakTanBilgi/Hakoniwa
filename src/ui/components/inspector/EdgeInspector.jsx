@@ -5,6 +5,7 @@ import Icon from '../Icon.jsx';
 import Tooltip from '../Tooltip.jsx';
 import { piecesOfEdge } from '../../../grid/compile.js';
 import { DEFAULT_WAVE, MIXED } from '../edges/constants.js';
+import { useT } from '../../../i18n/index.js';
 
 // Body of the "Edge" accordion card. Renders the per-edge tier editor for
 // one or more selected edges (collapsing properties that disagree across
@@ -18,6 +19,7 @@ export default function EdgeInspector({
   onClearSelection,
   setEdgeEffect, setEdgeConfig, clearEdgeOverride, setEdgeEffects,
 }) {
+  const t = useT();
   const piecesById = useMemo(() => new Map(pieces.map((p) => [p.id, p])), [pieces]);
 
   const edges = project.edges;
@@ -115,10 +117,10 @@ export default function EdgeInspector({
   };
 
   const headerSub = (() => {
-    if (pairKeys.length !== 1) return `${pairKeys.length} edges`;
+    if (pairKeys.length !== 1) return t('inspector.edges.count', { n: pairKeys.length });
     if (isOuter) {
       const piece = firstPiece;
-      return `Outer · ${piece?.label || piece?.id || ''}`;
+      return t('inspector.edgeOuter', { label: piece?.label || piece?.id || '' });
     }
     const e = sharedEdges.find((x) => x.pairKey === firstPk);
     if (!e) return '';
@@ -131,14 +133,16 @@ export default function EdgeInspector({
     <>
       <div className="inspector-header">
         <div>
-          <span className="inspector-header__kind">Edge</span>
+          <span className="inspector-header__kind">{t('inspector.edgeKind')}</span>
           <span className="inspector-header__title">
-            {pairKeys.length === 1 ? 'Selected edge' : `${pairKeys.length} edges`}
+            {pairKeys.length === 1
+              ? t('inspector.selectedEdge')
+              : t('inspector.edges.count', { n: pairKeys.length })}
           </span>
           {headerSub && <div className="inspector-header__sub">{headerSub}</div>}
         </div>
-        <Tooltip label="Clear selection">
-          <button type="button" className="icon-action-btn" aria-label="Clear selection" onClick={onClearSelection}>
+        <Tooltip label={t('inspector.clearSelection')}>
+          <button type="button" className="icon-action-btn" aria-label={t('inspector.clearSelection')} onClick={onClearSelection}>
             <Icon name="close" size={13} />
           </button>
         </Tooltip>
@@ -146,7 +150,7 @@ export default function EdgeInspector({
 
       <SubcardAccordion id="edge" defaultOpenId="shape-stroke">
         <EdgeTierEditor
-          title="This edge"
+          title={t('inspector.thisEdge')}
           accent
           effect={combo?.effect}
           config={combo?.cfg}

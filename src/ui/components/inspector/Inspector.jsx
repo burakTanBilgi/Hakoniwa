@@ -7,6 +7,7 @@ import EdgeTierEditor from './EdgeTierEditor.jsx';
 import { SubcardAccordion } from './SubcardAccordionContext.jsx';
 import { computeTierStates } from './cascade-source.js';
 import { DEFAULT_WAVE } from '../edges/constants.js';
+import { useT } from '../../../i18n/index.js';
 
 // Top-level selection-driven inspector. Three modes:
 //
@@ -35,6 +36,7 @@ export default function Inspector({
   setPieceContent, updatePieceContent,
   setDefaultCellEffects, setCellEffects,
 }) {
+  const t = useT();
   const [expandedTier, setExpandedTier] = useState(null);
   const [pieceTab, setPieceTab] = useState('edges');
 
@@ -125,7 +127,7 @@ export default function Inspector({
         {openTier === 'inner' && tierStates.inner.applicable && (
           <SubcardAccordion id="inner" defaultOpenId="shape-stroke">
             <EdgeTierEditor
-              title="Inner edges"
+              title={t('inspector.innerEdges')}
               accent
               effect={edges.inner?.effect ?? defaultEdgeEffect}
               config={edges.inner?.config ?? defaultEdgeConfig}
@@ -143,7 +145,7 @@ export default function Inspector({
         {openTier === 'outer' && tierStates.outer.applicable && (
           <SubcardAccordion id="outer" defaultOpenId="shape-stroke">
             <EdgeTierEditor
-              title="Outer edges"
+              title={t('inspector.outerEdges')}
               accent
               effect={edges.outer?.effect ?? defaultEdgeEffect}
               config={edges.outer?.config ?? defaultEdgeConfig}

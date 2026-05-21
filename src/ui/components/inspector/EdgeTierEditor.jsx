@@ -4,8 +4,9 @@ import EffectsPicker from '../interactions/EffectsPicker.jsx';
 import InspectorSubcard from './InspectorSubcard.jsx';
 import Icon from '../Icon.jsx';
 import Tooltip from '../Tooltip.jsx';
+import { useT } from '../../../i18n/index.js';
 
-const ResetButton = ({ onClick, label = 'Reset' }) => (
+const ResetButton = ({ onClick, label }) => (
   <Tooltip label={label}>
     <button type="button" className="icon-action-btn" aria-label={label} onClick={onClick}>
       <Icon name="reset" size={13} />
@@ -13,7 +14,7 @@ const ResetButton = ({ onClick, label = 'Reset' }) => (
   </Tooltip>
 );
 import { EFFECT_NAMES, EDGE_EFFECTS } from '../../../puzzle';
-import { DEFAULT_WAVE, MIXED, cap } from '../edges/constants.js';
+import { DEFAULT_WAVE, MIXED } from '../edges/constants.js';
 
 // Reusable editor for ANY edge cascade tier (default / inner / outer /
 // piece / per-edge). Renders two visually separated sub-cards: one for the
@@ -46,6 +47,8 @@ export default function EdgeTierEditor({
   onResetEffects,
   strokeHidden = false,
 }) {
+  const t = useT();
+
   const showInvert = effect === 'puzzle' || (effect === MIXED && config?.inverted !== undefined);
   const showWave   = effect === 'wave'   || (effect === MIXED && (config?.frequency != null || config?.amplitude != null));
 
@@ -54,37 +57,40 @@ export default function EdgeTierEditor({
       {!strokeHidden && (
         <InspectorSubcard
           id="shape-stroke"
-          title="Shape & stroke"
+          title={t('inspector.shapeStroke')}
           accent={accent}
-          actions={onClear ? <ResetButton onClick={onClear} /> : null}
+          actions={onClear ? <ResetButton onClick={onClear} label={t('inspector.reset')} /> : null}
         >
           <div className="picker-split">
-            <div className="picker-split__list" role="tablist" aria-label="Connector effect">
-              {EFFECT_NAMES.map((name) => (
-                <Tooltip key={name} label={cap(name)} side="right">
-                  <button type="button"
-                    role="tab"
-                    aria-selected={effect === name}
-                    className={`chip chip--pick${effect === name ? ' chip--on chip--editing' : ''}`}
-                    onClick={() => onSetEffect?.(name)}
-                    aria-label={cap(name)}>
-                    <Icon name={`eff-${name}`} size={16} />
-                  </button>
-                </Tooltip>
-              ))}
+            <div className="picker-split__list" role="tablist" aria-label={t('inspector.connectorEffect')}>
+              {EFFECT_NAMES.map((name) => {
+                const effectLabel = t(`inspector.effect.${name}`);
+                return (
+                  <Tooltip key={name} label={effectLabel} side="right">
+                    <button type="button"
+                      role="tab"
+                      aria-selected={effect === name}
+                      className={`chip chip--pick${effect === name ? ' chip--on chip--editing' : ''}`}
+                      onClick={() => onSetEffect?.(name)}
+                      aria-label={effectLabel}>
+                      <Icon name={`eff-${name}`} size={16} />
+                    </button>
+                  </Tooltip>
+                );
+              })}
             </div>
 
             <div className="picker-split__editor" role="tabpanel">
               {effect === MIXED && (
-                <span className="chip chip--sm chip--mixed">mixed</span>
+                <span className="chip chip--sm chip--mixed">{t('inspector.mixed')}</span>
               )}
 
               {showInvert && (
-                <Tooltip label="Invert tab / socket orientation">
+                <Tooltip label={t('inspector.invertOrientation')}>
                   <button type="button"
                     className={`chip chip--icon invert-toggle ${config?.inverted === true ? 'chip--active' : ''}`}
                     onClick={() => onPatchConfig?.({ inverted: !(config?.inverted === true) })}
-                    aria-label="Invert tab / socket orientation"
+                    aria-label={t('inspector.invertOrientation')}
                     aria-pressed={config?.inverted === true}>
                     <Icon name="invert" size={14} />
                   </button>
@@ -95,8 +101,8 @@ export default function EdgeTierEditor({
                 <>
                   <SliderRow
                     label={
-                      <Tooltip label="Wave frequency">
-                        <span className="sc-label-icon" aria-label="Wave frequency">
+                      <Tooltip label={t('inspector.waveFrequency')}>
+                        <span className="sc-label-icon" aria-label={t('inspector.waveFrequency')}>
                           <Icon name="prop-freq" size={14} />
                         </span>
                       </Tooltip>
@@ -109,8 +115,8 @@ export default function EdgeTierEditor({
                     onChange={(v) => onPatchConfig?.({ frequency: v })} />
                   <SliderRow
                     label={
-                      <Tooltip label="Wave amplitude">
-                        <span className="sc-label-icon" aria-label="Wave amplitude">
+                      <Tooltip label={t('inspector.waveAmplitude')}>
+                        <span className="sc-label-icon" aria-label={t('inspector.waveAmplitude')}>
                           <Icon name="prop-amp" size={14} />
                         </span>
                       </Tooltip>
@@ -132,9 +138,9 @@ export default function EdgeTierEditor({
 
       <InspectorSubcard
         id="animations"
-        title="Animations"
+        title={t('inspector.animations')}
         accent={accent}
-        actions={onResetEffects ? <ResetButton onClick={onResetEffects} /> : null}
+        actions={onResetEffects ? <ResetButton onClick={onResetEffects} label={t('inspector.reset')} /> : null}
       >
         <EffectsPicker
           catalogue={EDGE_EFFECTS}
