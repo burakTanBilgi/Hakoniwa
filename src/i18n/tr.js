@@ -36,7 +36,6 @@ export default {
   'projects.yourProjects': 'Projeleriniz',
   'projects.importJson': '↑ JSON İçe Aktar',
   'projects.newProject': 'Yeni proje',
-  'projects.untitled': 'Adsız',
   'projects.deleteTooltip': 'Projeyi sil',
   'projects.deleteAriaLabel': 'Projeyi sil',
   'projects.confirmDelete': '"{name}" silinsin mi?',
@@ -54,7 +53,6 @@ export default {
   'preview.grid': '{rows}×{cols} ızgara',
   'preview.lastEdited': 'son düzenleme {time}',
   'preview.hint': 'Izgara düzenini düzenleyin ya da kenarları stillendirmek ve hücrelere metin/resim eklemek için Düzenleme sayfasını açın.',
-  'preview.untitled': 'Adsız',
 
   // genel
   'common.untitled': 'Adsız',

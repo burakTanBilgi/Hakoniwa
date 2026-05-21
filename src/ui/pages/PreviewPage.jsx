@@ -80,7 +80,7 @@ export default function PreviewPage({ project, onNav }) {
             className="preview-info__name"
             onClick={() => setEditingName(true)}
           >
-            {p.name || t('preview.untitled')}
+            {p.name || t('common.untitled')}
           </h1>
         )}
 

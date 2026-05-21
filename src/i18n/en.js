@@ -37,7 +37,6 @@ export default {
   'projects.yourProjects': 'Your Projects',
   'projects.importJson': '↑ Import JSON',
   'projects.newProject': 'New project',
-  'projects.untitled': 'Untitled',
   'projects.deleteTooltip': 'Delete project',
   'projects.deleteAriaLabel': 'Delete project',
   'projects.confirmDelete': 'Delete "{name}"?',
@@ -55,7 +54,6 @@ export default {
   'preview.grid': '{rows}×{cols} grid',
   'preview.lastEdited': 'last edited {time}',
   'preview.hint': 'Edit the grid layout, or open the Edit page to style edges and fill cells with text/images.',
-  'preview.untitled': 'Untitled',
 
   // common
   'common.untitled': 'Untitled',

@@ -71,7 +71,7 @@ export default function ProjectsPage({ project, onNav }) {
                   <div className="project-tile__preview">
                     <PreviewSvg project={proj} maxSize={140} />
                   </div>
-                  <div className="project-tile__name">{proj.name || t('projects.untitled')}</div>
+                  <div className="project-tile__name">{proj.name || t('common.untitled')}</div>
                   <div className="project-tile__meta">
                     {proj.grid.rows}×{proj.grid.cols} · {formatTime(proj.updatedAt, t, lang)}
                   </div>
