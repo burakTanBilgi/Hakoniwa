@@ -12,6 +12,7 @@ import Icon from '../components/Icon.jsx';
 import Tooltip from '../components/Tooltip.jsx';
 import { useFileInput } from '../hooks/useFileInput.js';
 import { useMediaQuery } from '../hooks/useMediaQuery.js';
+import { useT } from '../../i18n/index.js';
 
 const PASSIVE_CARDS = new Set(['dimensions', 'tips', 'import']);
 
@@ -22,6 +23,7 @@ const PALETTE = [
 ];
 
 export default function GridEditorPage({ project }) {
+  const t = useT();
   const {
     project: p, setGrid, merge, unmerge, setPieceColor, replaceGrid,
     removeRows, removeCols,
@@ -111,7 +113,7 @@ export default function GridEditorPage({ project }) {
       setShowImport(false);
       setSelection([]);
     } catch (err) {
-      alert('Import failed: ' + err.message);
+      alert(t('grid.importFailed', { detail: err.message }));
     }
   };
 
@@ -121,7 +123,7 @@ export default function GridEditorPage({ project }) {
       const text = await file.text();
       handleImportText(text, { autoMerge: true });
     } catch (err) {
-      alert('Could not read file: ' + err.message);
+      alert(t('grid.readFileFailed', { detail: err.message }));
     }
   };
 
@@ -171,18 +173,18 @@ export default function GridEditorPage({ project }) {
     <>
       <AccordionCard
           id="selection"
-          title="Selection"
+          title={t('grid.cardSelection')}
           badge={selection.length > 0 ? selection.length : null}
           open={openCard === 'selection'}
           onToggle={setOpenCard}
         >
           <p className="hint">
             {selection.length === 0
-              ? 'Drag across cells, or click + Shift to add cells.'
-              : `${selection.length} cell${selection.length === 1 ? '' : 's'} selected.`}
+              ? t('grid.selectionHintEmpty')
+              : t(selection.length === 1 ? 'grid.selectionHint.one' : 'grid.selectionHint.other', { n: selection.length })}
           </p>
           <div className="action-stack">
-            <Tooltip label={canMerge ? 'Merge selected cells' : 'Selection must form a complete rectangle'}>
+            <Tooltip label={canMerge ? t('grid.mergeTooltipOk') : t('grid.mergeTooltipDisabled')}>
               <button
                 type="button"
                 className="action-btn action-btn--primary"
@@ -190,7 +192,7 @@ export default function GridEditorPage({ project }) {
                 onClick={doMerge}
               >
                 <Icon name="merge" size={14} />
-                <span>Merge</span>
+                <span>{t('grid.merge')}</span>
               </button>
             </Tooltip>
             <button
@@ -200,7 +202,7 @@ export default function GridEditorPage({ project }) {
               onClick={doUnmerge}
             >
               <Icon name="unmerge" size={14} />
-              <span>Unmerge</span>
+              <span>{t('grid.unmerge')}</span>
             </button>
             <button
               type="button"
@@ -208,31 +210,31 @@ export default function GridEditorPage({ project }) {
               disabled={selection.length === 0}
               onClick={clearSel}
             >
-              Clear selection
+              {t('grid.clearSelection')}
             </button>
           </div>
           {selection.length >= 2 && !canMerge && (
             <p className="hint hint--warn">
-              Selection isn't rectangular — merge requires every cell in a complete rectangle.
+              {t('grid.selectionNotRect')}
             </p>
           )}
         </AccordionCard>
 
         <AccordionCard
           id="color"
-          title="Color"
+          title={t('grid.cardColor')}
           badge={selectedGroupIds.length > 1 ? selectedGroupIds.length : null}
           open={openCard === 'color'}
           onToggle={setOpenCard}
           disabled={selectedGroupIds.length === 0}
         >
           <div className="color-grid">
-            <Tooltip label="Clear color">
+            <Tooltip label={t('grid.clearColorLabel')}>
               <button
                 type="button"
                 className={`color-swatch color-swatch--clear ${currentColor == null ? 'color-swatch--active' : ''}`}
                 onClick={() => applyColor(null)}
-                aria-label="Clear color"
+                aria-label={t('grid.clearColorLabel')}
               />
             </Tooltip>
             {PALETTE.map((c) => (
@@ -242,11 +244,11 @@ export default function GridEditorPage({ project }) {
                   className={`color-swatch ${currentColor === c ? 'color-swatch--active' : ''}`}
                   style={{ background: c }}
                   onClick={() => applyColor(c)}
-                  aria-label={`Color ${c}`}
+                  aria-label={t('grid.colorAriaLabel', { c })}
                 />
               </Tooltip>
             ))}
-            <Tooltip label="Custom color">
+            <Tooltip label={t('grid.customColor')}>
               <label className="color-swatch color-swatch--custom">
                 <input
                   type="color"
@@ -257,13 +259,13 @@ export default function GridEditorPage({ project }) {
             </Tooltip>
           </div>
           {selectedGroupIds.length === 0 && (
-            <p className="hint">Select cells to colour them.</p>
+            <p className="hint">{t('grid.colorHint')}</p>
           )}
         </AccordionCard>
 
         <AccordionCard
           id="backgrounds"
-          title="Backgrounds"
+          title={t('grid.cardBackgrounds')}
           badge={p.backgrounds?.length || null}
           open={openCard === 'backgrounds'}
           onToggle={setOpenCard}
@@ -279,34 +281,34 @@ export default function GridEditorPage({ project }) {
 
         <AccordionCard
           id="dimensions"
-          title="Dimensions"
+          title={t('grid.cardDimensions')}
           open={openCard === 'dimensions'}
           onToggle={setOpenCard}
         >
           <SliderRow
-            label="Rows" min={MIN_GRID} max={MAX_GRID}
+            label={t('grid.rowsLabel')} min={MIN_GRID} max={MAX_GRID}
             value={p.grid.rows}
             onChange={(v) => setGrid({ rows: v })}
           />
           <SliderRow
-            label="Cols" min={MIN_GRID} max={MAX_GRID}
+            label={t('grid.colsLabel')} min={MIN_GRID} max={MAX_GRID}
             value={p.grid.cols}
             onChange={(v) => setGrid({ cols: v })}
           />
-          <p className="hint">{p.grid.rows} × {p.grid.cols} cells (max {MAX_GRID}×{MAX_GRID}).</p>
+          <p className="hint">{t('grid.dimensionsHint', { rows: p.grid.rows, cols: p.grid.cols, max: MAX_GRID })}</p>
         </AccordionCard>
 
         <AccordionCard
           id="import"
-          title="Import"
+          title={t('grid.cardImport')}
           open={openCard === 'import'}
           onToggle={setOpenCard}
         >
-          <p className="hint">Paste a spreadsheet, or import a CSV file.</p>
+          <p className="hint">{t('grid.importHint')}</p>
           <div className="action-stack">
             <button type="button" className="action-btn" onClick={() => setShowImport(true)}>
               <Icon name="paste" size={14} />
-              <span>Paste data</span>
+              <span>{t('grid.pasteData')}</span>
             </button>
             <input
               {...csvInput.inputProps}
@@ -316,24 +318,24 @@ export default function GridEditorPage({ project }) {
             />
             <button type="button" className="action-btn action-btn--ghost" onClick={csvInput.open}>
               <Icon name="upload" size={14} />
-              <span>Import CSV/TSV file</span>
+              <span>{t('grid.importCsvTsv')}</span>
             </button>
           </div>
-          <p className="hint hint--warn">Importing replaces the current grid.</p>
+          <p className="hint hint--warn">{t('grid.importWarnHint')}</p>
         </AccordionCard>
 
         <AccordionCard
           id="tips"
-          title="Tips"
+          title={t('grid.cardTips')}
           open={openCard === 'tips'}
           onToggle={setOpenCard}
         >
           <ul className="tip-list">
-            <li>Drag from any cell to box-select.</li>
-            <li>Shift-click to add or remove individual cells.</li>
+            <li>{t('grid.tip1')}</li>
+            <li>{t('grid.tip2')}</li>
             <li><strong>Click a row/column number</strong> to delete it. Drag across multiple to delete in bulk.</li>
-            <li>Merged groups show their dimensions.</li>
-            <li>Click any number value to type it directly.</li>
+            <li>{t('grid.tip4')}</li>
+            <li>{t('grid.tip5')}</li>
             <li><strong>Scroll</strong> to zoom; middle-drag or Ctrl+drag to pan. On touch, pinch and drag.</li>
             <li>Select cells, then <strong>paste an image</strong> (Ctrl+V) to span it across them.</li>
           </ul>
@@ -362,7 +364,7 @@ export default function GridEditorPage({ project }) {
           {canvas}
           <BottomSheet
             open
-            title="Grid tools"
+            title={t('grid.sheetTitle')}
             snap={sheetSnap}
             onSnapChange={setSheetSnap}
             defaultSnap="collapsed"

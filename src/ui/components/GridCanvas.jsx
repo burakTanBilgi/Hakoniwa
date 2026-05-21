@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { groupBoundsMap, rectFill } from '../../grid/grid.js';
+import { useT } from '../../i18n/index.js';
 
 const CELL_PX = 64;
 const HEADER_PX = 22;     // size of row/column number gutter
@@ -26,6 +27,7 @@ export default function GridCanvas({
   onDeleteRows,
   onDeleteCols,
 }) {
+  const t = useT();
   const svgRef = useRef(null);
   const [drag, setDrag] = useState(null);          // cell drag-select state
   const [hdrDrag, setHdrDrag] = useState(null);    // { axis: 'row'|'col', marks: Set<number> }
@@ -207,7 +209,7 @@ export default function GridCanvas({
                 onPointerEnter={() => !hdrDrag && setHdrHover({ axis: 'col', idx: c })}
                 onPointerLeave={() => !hdrDrag && setHdrHover(null)}
               >
-                <title>Click to delete column {c + 1}</title>
+                <title>{t('grid.deleteColumn', { n: c + 1 })}</title>
               </rect>
               {danger ? (
                 <text x={x + CELL_PX / 2} y={PADDING + HEADER_PX / 2}
@@ -235,7 +237,7 @@ export default function GridCanvas({
                 onPointerEnter={() => !hdrDrag && setHdrHover({ axis: 'row', idx: r })}
                 onPointerLeave={() => !hdrDrag && setHdrHover(null)}
               >
-                <title>Click to delete row {r + 1}</title>
+                <title>{t('grid.deleteRow', { n: r + 1 })}</title>
               </rect>
               {danger ? (
                 <text x={PADDING + HEADER_PX / 2} y={y + CELL_PX / 2}

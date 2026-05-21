@@ -56,7 +56,64 @@ export default {
 
   // genel
   'common.untitled': 'Adsız',
+  'common.cancel': 'İptal',
+  'common.close': 'Kapat',
+  'common.import': 'İçe Aktar',
+  'common.delete': 'Sil',
 
   // hatalar
   'errors.importFailed': 'İçe aktarılamadı: {detail}',
+
+  // ızgara sayfası
+  'grid.cardSelection': 'Seçim',
+  'grid.cardColor': 'Renk',
+  'grid.cardBackgrounds': 'Arka Planlar',
+  'grid.cardDimensions': 'Boyutlar',
+  'grid.cardImport': 'İçe Aktar',
+  'grid.cardTips': 'İpuçları',
+  'grid.sheetTitle': 'Izgara araçları',
+  'grid.selectionHintEmpty': 'Hücrelerin üzerinde sürükleyin veya hücre eklemek için tıklayın + Shift.',
+  'grid.selectionHint.one': '{n} hücre seçildi.',
+  'grid.selectionHint.other': '{n} hücre seçildi.',
+  'grid.mergeTooltipOk': 'Seçili hücreleri birleştir',
+  'grid.mergeTooltipDisabled': 'Seçim tam bir dikdörtgen oluşturmalıdır',
+  'grid.merge': 'Birleştir',
+  'grid.unmerge': 'Ayır',
+  'grid.clearSelection': 'Seçimi temizle',
+  'grid.selectionNotRect': 'Seçim dikdörtgen değil — birleştirme tam bir dikdörtgendeki tüm hücreleri gerektirir.',
+  'grid.clearColorLabel': 'Rengi temizle',
+  'grid.colorAriaLabel': 'Renk {c}',
+  'grid.customColor': 'Özel renk',
+  'grid.colorHint': 'Renklendirmek için hücreleri seçin.',
+  'grid.rowsLabel': 'Satırlar',
+  'grid.colsLabel': 'Sütunlar',
+  'grid.dimensionsHint': '{rows} × {cols} hücre (maks {max}×{max}).',
+  'grid.importHint': 'Bir elektronik tablo yapıştırın veya CSV dosyası içe aktarın.',
+  'grid.pasteData': 'Veri yapıştır',
+  'grid.importCsvTsv': 'CSV/TSV dosyası içe aktar',
+  'grid.importWarnHint': 'İçe aktarma mevcut ızgaranın yerini alır.',
+  'grid.importFailed': 'İçe aktarma başarısız: {detail}',
+  'grid.readFileFailed': 'Dosya okunamadı: {detail}',
+  'grid.tip1': 'Kutu seçimi için herhangi bir hücreden sürükleyin.',
+  'grid.tip2': 'Tek tek hücre eklemek veya çıkarmak için Shift ile tıklayın.',
+  'grid.tip4': 'Birleştirilmiş gruplar boyutlarını gösterir.',
+  'grid.tip5': 'Doğrudan yazmak için herhangi bir sayı değerine tıklayın.',
+
+  // ızgara tuvali
+  'grid.deleteColumn': 'Sütun {n}\'i silmek için tıklayın',
+  'grid.deleteRow': 'Satır {n}\'i silmek için tıklayın',
+
+  // arka planlar paneli
+  'grid.bgHintSelection': 'Resim, seçili {cols}×{rows} hücreyi dolduracak ve alttaki parçalara bölünecek.',
+  'grid.bgHintNoSelection': 'Resmin yerleştirileceği yeri seçmek için hücreleri seçin (varsayılan olarak tam ızgara).',
+  'grid.uploadImage': 'Resim yükle',
+  'grid.pasteImageHint': 'Ya da bir resim yapıştırın (Ctrl+V) — mevcut seçime eklenir.',
+  'grid.deleteBgTooltip': 'Bu arka planı sil',
+  'grid.deleteBgAriaLabel': 'Arka planı sil',
+
+  // içe aktarma iletişim kutusu
+  'grid.importDialogTitle': 'Izgara verisi içe aktar',
+  'grid.importDialogHint': 'Sekmeyle ayrılmış (Excel/Google Sheets\'ten) veya virgülle ayrılmış veri yapıştırın. Boş olmayan her hücre bir parça olur.',
+  'grid.autoMergeLabel': 'Yatay dizileri otomatik birleştir (her hücreyi boşluklar üzerinden sağa genişlet)',
+  'grid.insertSample': 'Örnek ekle',
 };

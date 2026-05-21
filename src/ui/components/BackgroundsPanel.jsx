@@ -2,6 +2,7 @@ import { FIT_OPTIONS } from '../utils/fitOptions.js';
 import { useFileInput } from '../hooks/useFileInput.js';
 import Icon from './Icon.jsx';
 import Tooltip from './Tooltip.jsx';
+import { useT } from '../../i18n/index.js';
 
 // Side-panel UI for project-wide background images. Each background covers a
 // rectangular range of cells and renders sliced across whatever pieces happen
@@ -13,14 +14,15 @@ export default function BackgroundsPanel({
   onUpdate,
   onRemove,
 }) {
+  const t = useT();
   const { inputProps, open } = useFileInput(onAddImage);
 
   return (
     <>
       <p className="hint">
         {selectionRect
-          ? `Image will fill ${selectionRect.cMax - selectionRect.cMin + 1}×${selectionRect.rMax - selectionRect.rMin + 1} selected cells, sliced across the underlying pieces.`
-          : 'Select cells to choose where to place the image (defaults to the full grid).'}
+          ? t('grid.bgHintSelection', { cols: selectionRect.cMax - selectionRect.cMin + 1, rows: selectionRect.rMax - selectionRect.rMin + 1 })
+          : t('grid.bgHintNoSelection')}
       </p>
 
       <input {...inputProps} type="file" accept="image/*" hidden />
@@ -31,9 +33,9 @@ export default function BackgroundsPanel({
           onClick={open}
         >
           <Icon name="upload" size={14} />
-          <span>Upload image</span>
+          <span>{t('grid.uploadImage')}</span>
         </button>
-        <p className="hint">Or paste an image (Ctrl+V) — it goes into the current selection.</p>
+        <p className="hint">{t('grid.pasteImageHint')}</p>
       </div>
 
       {backgrounds.length > 0 && (
@@ -46,12 +48,12 @@ export default function BackgroundsPanel({
                 <div className="bg-item__body">
                   <div className="bg-item__head">
                     <span className="bg-item__label">#{i + 1} · {cells}</span>
-                    <Tooltip label="Delete this background">
+                    <Tooltip label={t('grid.deleteBgTooltip')}>
                       <button
                         type="button"
                         className="bg-item__del"
                         onClick={() => onRemove(bg.id)}
-                        aria-label="Delete background"
+                        aria-label={t('grid.deleteBgAriaLabel')}
                       >
                         <Icon name="trash" size={13} />
                       </button>
