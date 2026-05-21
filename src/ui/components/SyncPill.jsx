@@ -1,3 +1,4 @@
+import { useT } from '../../i18n/index.js';
 import './SyncPill.css';
 
 // Compact status pill that lives next to the brand/project name. Four
@@ -6,14 +7,15 @@ import './SyncPill.css';
 //   syncing → upload/download in flight                   → "Syncing…"
 //   synced  → idle, last reconcile succeeded              → "Synced"
 //   error   → last sync failed                            → "Sync error"
-const LABELS = {
-  offline: 'Local',
-  syncing: 'Syncing…',
-  synced:  'Synced',
-  error:   'Sync error',
-};
 
 export default function SyncPill({ status = 'offline' }) {
+  const t = useT();
+  const LABELS = {
+    offline: t('sync.statusLocal'),
+    syncing: t('sync.statusSyncing'),
+    synced:  t('sync.statusSynced'),
+    error:   t('sync.statusError'),
+  };
   const label = LABELS[status] || LABELS.offline;
   return (
     <span

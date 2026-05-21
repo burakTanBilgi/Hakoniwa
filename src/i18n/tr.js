@@ -54,6 +54,26 @@ export default {
   'preview.lastEdited': 'son düzenleme {time}',
   'preview.hint': 'Izgara düzenini düzenleyin ya da kenarları stillendirmek ve hücrelere metin/resim eklemek için Düzenleme sayfasını açın.',
 
+  // kimlik doğrulama
+  'auth.signInSub': 'Projelerinizi cihazlar arasında senkronize etmek için giriş yapın.',
+  'auth.continueWithGoogle': 'Google ile devam et',
+  'auth.dividerOr': 'veya',
+  'auth.email': 'E-posta',
+  'auth.password': 'Şifre',
+  'auth.createAccount': 'Hesap oluştur',
+  'auth.signIn': 'Giriş yap',
+  'auth.busy': '…',
+  'auth.checkEmail': 'Hesabınızı onaylamak için e-postanızı kontrol edin.',
+  'auth.haveAccount': 'Hesabınız var mı? Giriş yapın.',
+  'auth.newHere': 'Yeni misiniz? Hesap oluşturun.',
+  'auth.signOut': 'Çıkış yap',
+
+  // senkronizasyon hapsi
+  'sync.statusLocal': 'Yerel',
+  'sync.statusSyncing': 'Senkronize ediliyor…',
+  'sync.statusSynced': 'Senkronize edildi',
+  'sync.statusError': 'Senkronizasyon hatası',
+
   // genel
   'common.untitled': 'Adsız',
   'common.cancel': 'İptal',

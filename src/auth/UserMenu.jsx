@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from './AuthProvider.jsx';
+import { useT } from '../i18n/index.js';
 import './UserMenu.css';
 
 // Tiny avatar + dropdown for the page-nav. Shows the user's Google
 // picture (or an initial fallback) and exposes a sign-out action.
 export default function UserMenu() {
+  const t = useT();
   const { user, signOut, supabaseConfigured } = useAuth();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -57,7 +59,7 @@ export default function UserMenu() {
             role="menuitem"
             onClick={() => { setOpen(false); signOut(); }}
           >
-            Sign out
+            {t('auth.signOut')}
           </button>
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from './AuthProvider.jsx';
+import { useT } from '../i18n/index.js';
 import './LoginScreen.css';
 
 // Full-screen sign-in landing. Renders only when Supabase is configured
@@ -8,6 +9,7 @@ import './LoginScreen.css';
 // patterns used across the unified-account apps (Doxa, Hakoniwa,
 // yildizlarProjesi).
 export default function LoginScreen() {
+  const t = useT();
   const { signInWithGoogle, signInWithEmail, signUpWithEmail } = useAuth();
   const [mode, setMode]       = useState('sign-in'); // 'sign-in' | 'sign-up'
   const [email, setEmail]     = useState('');
@@ -31,7 +33,7 @@ export default function LoginScreen() {
     setBusy(false);
     if (error) { setError(error.message); return; }
     if (mode === 'sign-up' && !data?.session) {
-      setInfo('Check your email to confirm your account.');
+      setInfo(t('auth.checkEmail'));
     }
   };
 
@@ -43,7 +45,7 @@ export default function LoginScreen() {
           <h1 className="login-screen__title">Hakoniwa</h1>
         </div>
         <p className="login-screen__sub">
-          Sign in to sync your projects across devices.
+          {t('auth.signInSub')}
         </p>
 
         <button
@@ -53,14 +55,14 @@ export default function LoginScreen() {
           disabled={busy}
         >
           <GoogleGlyph />
-          <span>Continue with Google</span>
+          <span>{t('auth.continueWithGoogle')}</span>
         </button>
 
-        <div className="login-screen__divider" aria-hidden>or</div>
+        <div className="login-screen__divider" aria-hidden>{t('auth.dividerOr')}</div>
 
         <form className="login-screen__form" onSubmit={handleEmail}>
           <label className="login-screen__field">
-            <span>Email</span>
+            <span>{t('auth.email')}</span>
             <input
               type="email"
               autoComplete="email"
@@ -70,7 +72,7 @@ export default function LoginScreen() {
             />
           </label>
           <label className="login-screen__field">
-            <span>Password</span>
+            <span>{t('auth.password')}</span>
             <input
               type="password"
               autoComplete={mode === 'sign-up' ? 'new-password' : 'current-password'}
@@ -85,7 +87,7 @@ export default function LoginScreen() {
           {info  && <p className="login-screen__info">{info}</p>}
 
           <button type="submit" className="login-screen__submit" disabled={busy}>
-            {busy ? '…' : mode === 'sign-up' ? 'Create account' : 'Sign in'}
+            {busy ? t('auth.busy') : mode === 'sign-up' ? t('auth.createAccount') : t('auth.signIn')}
           </button>
         </form>
 
@@ -94,7 +96,7 @@ export default function LoginScreen() {
           className="login-screen__toggle"
           onClick={() => { setMode(m => m === 'sign-up' ? 'sign-in' : 'sign-up'); setError(null); setInfo(null); }}
         >
-          {mode === 'sign-up' ? 'Have an account? Sign in.' : "New here? Create an account."}
+          {mode === 'sign-up' ? t('auth.haveAccount') : t('auth.newHere')}
         </button>
       </div>
     </div>

@@ -55,6 +55,26 @@ export default {
   'preview.lastEdited': 'last edited {time}',
   'preview.hint': 'Edit the grid layout, or open the Edit page to style edges and fill cells with text/images.',
 
+  // auth
+  'auth.signInSub': 'Sign in to sync your projects across devices.',
+  'auth.continueWithGoogle': 'Continue with Google',
+  'auth.dividerOr': 'or',
+  'auth.email': 'Email',
+  'auth.password': 'Password',
+  'auth.createAccount': 'Create account',
+  'auth.signIn': 'Sign in',
+  'auth.busy': '…',
+  'auth.checkEmail': 'Check your email to confirm your account.',
+  'auth.haveAccount': 'Have an account? Sign in.',
+  'auth.newHere': 'New here? Create an account.',
+  'auth.signOut': 'Sign out',
+
+  // sync pill
+  'sync.statusLocal': 'Local',
+  'sync.statusSyncing': 'Syncing…',
+  'sync.statusSynced': 'Synced',
+  'sync.statusError': 'Sync error',
+
   // common
   'common.untitled': 'Untitled',
   'common.cancel': 'Cancel',
