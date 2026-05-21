@@ -273,8 +273,61 @@ export default {
   'inspector.innerEdges': 'İç kenarlar',
   'inspector.outerEdges': 'Dış kenarlar',
 
-  // efekt adları (kenar katmanı düzenleyicisindeki çip etiketleri / aria-etiketleri)
-  'inspector.effect.puzzle': 'Yapboz',
-  'inspector.effect.wave': 'Dalga',
-  'inspector.effect.straight': 'Düz',
+  // efektler ad alanı — efekt kimlikleri, tetikleyiciler, kapsamlar, yapılandırma alanları, seçici arayüzü
+  // Bağlayıcı tipi yongaları (inspector.effect.*'dan birleştirme için taşındı)
+  'effects.puzzle': 'Yapboz',
+  'effects.wave': 'Dalga',
+  'effects.straight': 'Düz',
+
+  // Hücre efekt kimlikleri
+  'effects.highlight': 'Vurgula',
+  'effects.lift': 'Kaldır',
+  'effects.scale-up': 'Büyüt',
+  'effects.scale-down': 'Küçült',
+  'effects.glow': 'Parılt',
+  'effects.pulse': 'Nabız',
+
+  // Yalnızca kenar efekt kimlikleri
+  'effects.wiggle': 'Sallan',
+  'effects.thicken': 'Kalınlaştır',
+  'effects.flash': 'Yanıp Sön',
+
+  // Tetikleyici kimlikleri
+  'effects.trigger.hover': 'Üzerine Gel',
+  'effects.trigger.click': 'Tıkla',
+  'effects.trigger.idle': 'Boşta',
+  'effects.trigger.always': 'Her Zaman',
+
+  // Kapsam kimlikleri (yalnızca kenar efektleri)
+  'effects.scope.piece': 'Hücre',
+  'effects.scope.edge': 'Kenar',
+
+  // Yapılandırma alanı etiketleri
+  'effects.config.distance': 'Mesafe',
+  'effects.config.amount': 'Miktar',
+  'effects.config.radius': 'Yarıçap',
+  'effects.config.speed': 'Hız',
+  'effects.config.intensity': 'Yoğunluk',
+  'effects.config.width': 'Genişlik',
+  'effects.config.duration': 'Süre',
+
+  // EffectsPicker arayüz dizeleri
+  'effects.pickerEmpty': 'Eklemek için bir efekt seçin.',
+  'effects.mixed': 'birden fazla efekt karışık',
+  'effects.removeEffect': 'Efekti kaldır',
+  'effects.triggerGroup': 'Tetikleyici',
+  'effects.scopeGroup': 'Kapsam',
+  'effects.pickerListAriaLabel': 'Efektler',
+
+  // StyleControls arayüz dizeleri
+  'effects.strokeColor': 'Çizgi rengi',
+  'effects.strokeColorValue': 'Çizgi rengi {color}',
+  'effects.pickStrokeColor': 'Çizgi rengi seç',
+  'effects.resetColor': 'Rengi sıfırla',
+  'effects.resetToTheme': 'Temaya sıfırla',
+  'effects.pickAColor': 'Renk seç',
+  'effects.opacity': 'Opaklık',
+  'effects.strokeWidth': 'Çizgi kalınlığı',
+  'effects.theme': 'tema',
+  'effects.colorMixed': 'karışık',
 };

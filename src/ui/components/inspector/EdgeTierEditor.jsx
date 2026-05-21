@@ -64,7 +64,7 @@ export default function EdgeTierEditor({
           <div className="picker-split">
             <div className="picker-split__list" role="tablist" aria-label={t('inspector.connectorEffect')}>
               {EFFECT_NAMES.map((name) => {
-                const effectLabel = t(`inspector.effect.${name}`);
+                const effectLabel = t(`effects.${name}`);
                 return (
                   <Tooltip key={name} label={effectLabel} side="right">
                     <button type="button"

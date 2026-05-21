@@ -274,8 +274,61 @@ export default {
   'inspector.innerEdges': 'Inner edges',
   'inspector.outerEdges': 'Outer edges',
 
-  // effect names (used as chip labels / aria-labels in the edge tier editor)
-  'inspector.effect.puzzle': 'Puzzle',
-  'inspector.effect.wave': 'Wave',
-  'inspector.effect.straight': 'Straight',
+  // effects namespace — effect ids, triggers, scopes, config fields, picker UI
+  // Connector type chips (moved from inspector.effect.* for consolidation)
+  'effects.puzzle': 'Puzzle',
+  'effects.wave': 'Wave',
+  'effects.straight': 'Straight',
+
+  // Cell effect ids
+  'effects.highlight': 'Highlight',
+  'effects.lift': 'Lift',
+  'effects.scale-up': 'Scale up',
+  'effects.scale-down': 'Scale down',
+  'effects.glow': 'Glow',
+  'effects.pulse': 'Pulse',
+
+  // Edge-only effect ids
+  'effects.wiggle': 'Wiggle',
+  'effects.thicken': 'Thicken',
+  'effects.flash': 'Flash',
+
+  // Trigger ids
+  'effects.trigger.hover': 'Hover',
+  'effects.trigger.click': 'Click',
+  'effects.trigger.idle': 'Idle',
+  'effects.trigger.always': 'Always',
+
+  // Scope ids (edge effects only)
+  'effects.scope.piece': 'Cell',
+  'effects.scope.edge': 'Edge',
+
+  // Config field labels
+  'effects.config.distance': 'Distance',
+  'effects.config.amount': 'Amount',
+  'effects.config.radius': 'Radius',
+  'effects.config.speed': 'Speed',
+  'effects.config.intensity': 'Intensity',
+  'effects.config.width': 'Width',
+  'effects.config.duration': 'Duration',
+
+  // EffectsPicker UI strings
+  'effects.pickerEmpty': 'Pick an effect to add it.',
+  'effects.mixed': 'multiple effects mixed',
+  'effects.removeEffect': 'Remove effect',
+  'effects.triggerGroup': 'Trigger',
+  'effects.scopeGroup': 'Scope',
+  'effects.pickerListAriaLabel': 'Effects',
+
+  // StyleControls UI strings
+  'effects.strokeColor': 'Stroke color',
+  'effects.strokeColorValue': 'Stroke color {color}',
+  'effects.pickStrokeColor': 'Pick stroke color',
+  'effects.resetColor': 'Reset color',
+  'effects.resetToTheme': 'Reset to theme',
+  'effects.pickAColor': 'Pick a color',
+  'effects.opacity': 'Opacity',
+  'effects.strokeWidth': 'Stroke width',
+  'effects.theme': 'theme',
+  'effects.colorMixed': 'mixed',
 };

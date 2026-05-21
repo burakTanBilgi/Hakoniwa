@@ -4,6 +4,7 @@ import { HexColorPicker } from 'react-colorful';
 import SliderRow from '../SliderRow.jsx';
 import Icon from '../Icon.jsx';
 import Tooltip from '../Tooltip.jsx';
+import { useT } from '../../../i18n/index.js';
 import { MIXED } from './constants.js';
 
 const POP_W = 208;            // 192px picker + 8px×2 padding
@@ -22,6 +23,7 @@ const VIEWPORT_PAD = 12;
 // a small popover — replaces the native `<input type="color">` whose
 // grey OS chrome clashed with the dark amber aesthetic.
 export default function StyleControls({ config, onPatchConfig }) {
+  const t = useT();
   const colorMixed   = config?.color === MIXED;
   const opacityMixed = config?.opacity === MIXED;
   const widthMixed   = config?.strokeWidth === MIXED;
@@ -89,8 +91,8 @@ export default function StyleControls({ config, onPatchConfig }) {
   return (
     <div className="style-controls">
       <div className="form-row sc-color-row">
-        <Tooltip label="Stroke color">
-          <span className="form-row__icon" aria-label="Stroke color">
+        <Tooltip label={t('effects.strokeColor')}>
+          <span className="form-row__icon" aria-label={t('effects.strokeColor')}>
             <Icon name="prop-color" size={14} />
           </span>
         </Tooltip>
@@ -103,7 +105,7 @@ export default function StyleControls({ config, onPatchConfig }) {
           onClick={() => setPickerOpen((v) => !v)}
           aria-haspopup="dialog"
           aria-expanded={pickerOpen}
-          aria-label={colorIsSet ? `Stroke color ${colorValue}` : 'Pick stroke color'}
+          aria-label={colorIsSet ? t('effects.strokeColorValue', { color: colorValue }) : t('effects.pickStrokeColor')}
         />
 
         {pickerOpen && createPortal(
@@ -111,7 +113,7 @@ export default function StyleControls({ config, onPatchConfig }) {
             ref={popRef}
             className={`sc-color-pop${coords.flip ? ' sc-color-pop--up' : ''}`}
             role="dialog"
-            aria-label="Pick a color"
+            aria-label={t('effects.pickAColor')}
             style={{ top: coords.top, left: coords.left }}
           >
             <HexColorPicker
@@ -133,11 +135,11 @@ export default function StyleControls({ config, onPatchConfig }) {
                 }}
               />
               {colorIsSet && (
-                <Tooltip label="Reset to theme">
+                <Tooltip label={t('effects.resetToTheme')}>
                   <button
                     type="button"
                     className="icon-action-btn icon-action-btn--sm"
-                    aria-label="Reset to theme"
+                    aria-label={t('effects.resetToTheme')}
                     onClick={() => { onPatchConfig({ color: undefined }); setPickerOpen(false); }}
                   >
                     <Icon name="reset" size={12} />
@@ -150,25 +152,25 @@ export default function StyleControls({ config, onPatchConfig }) {
         )}
 
         {colorIsSet ? (
-          <Tooltip label="Reset color">
+          <Tooltip label={t('effects.resetColor')}>
             <button
               type="button"
               className="icon-action-btn icon-action-btn--sm"
-              aria-label="Reset color"
+              aria-label={t('effects.resetColor')}
               onClick={() => onPatchConfig({ color: undefined })}
             >
               <Icon name="reset" size={12} />
             </button>
           </Tooltip>
         ) : (
-          <span className="hint" style={{ marginLeft: 4 }}>{colorMixed ? 'mixed' : 'theme'}</span>
+          <span className="hint" style={{ marginLeft: 4 }}>{colorMixed ? t('effects.colorMixed') : t('effects.theme')}</span>
         )}
       </div>
 
       <SliderRow
         label={
-          <Tooltip label="Opacity">
-            <span className="sc-label-icon" aria-label="Opacity">
+          <Tooltip label={t('effects.opacity')}>
+            <span className="sc-label-icon" aria-label={t('effects.opacity')}>
               <Icon name="prop-opacity" size={14} />
             </span>
           </Tooltip>
@@ -181,8 +183,8 @@ export default function StyleControls({ config, onPatchConfig }) {
 
       <SliderRow
         label={
-          <Tooltip label="Stroke width">
-            <span className="sc-label-icon" aria-label="Stroke width">
+          <Tooltip label={t('effects.strokeWidth')}>
+            <span className="sc-label-icon" aria-label={t('effects.strokeWidth')}>
               <Icon name="prop-width" size={14} />
             </span>
           </Tooltip>
