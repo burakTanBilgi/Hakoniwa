@@ -7,18 +7,9 @@ import ProjectDefaultsCard from '../inspector/ProjectDefaultsCard.jsx';
 import EdgeTierEditor from '../inspector/EdgeTierEditor.jsx';
 import { SubcardAccordion } from '../inspector/SubcardAccordionContext.jsx';
 import { DEFAULT_WAVE } from '../edges/constants.js';
+import { useT } from '../../../i18n/index.js';
 
-const DRAWER_TIERS = [
-  { id: 'default', label: 'Default' },
-  { id: 'inner',   label: 'Inner'   },
-  { id: 'outer',   label: 'Outer'   },
-];
-
-const DRAWER_TITLES = {
-  default: 'Project defaults',
-  inner:   'Inner edges',
-  outer:   'Outer edges',
-};
+const DRAWER_TIER_IDS = ['default', 'inner', 'outer'];
 
 // Canvas-first Edit UI (Direction A). A slim left nav, the rest is
 // canvas + ViewPanel. Selection drives floating panels overlaid on the
@@ -49,6 +40,17 @@ export default function CanvasEditUi({
   setPieceContent, updatePieceContent,
   setDefaultCellEffects, setCellEffects,
 }) {
+  const t = useT();
+  const DRAWER_TIERS = [
+    { id: 'default', label: t('edit.tierDefault') },
+    { id: 'inner',   label: t('edit.tierInner')   },
+    { id: 'outer',   label: t('edit.tierOuter')   },
+  ];
+  const DRAWER_TITLES = {
+    default: t('edit.projectDefaults'),
+    inner:   t('edit.tierInnerEdges'),
+    outer:   t('edit.tierOuterEdges'),
+  };
   const [defaultsOpen, setDefaultsOpen] = useState(false);
   const [defaultsTier, setDefaultsTier] = useState('default');
   const [pieceTab, setPieceTab] = useState('edges');
@@ -86,7 +88,7 @@ export default function CanvasEditUi({
             placement="left-sheet"
             onClose={closeDrawer}
           >
-            <div className="canvas-defaults__tiers" role="tablist" aria-label="Tier">
+            <div className="canvas-defaults__tiers" role="tablist" aria-label={t('edit.tierTablistAriaLabel')}>
               {DRAWER_TIERS.map((t) => (
                 <button
                   key={t.id}
@@ -117,7 +119,7 @@ export default function CanvasEditUi({
               return (
                 <SubcardAccordion id={kind} defaultOpenId="shape-stroke">
                   <EdgeTierEditor
-                    title={kind === 'inner' ? 'Inner edges' : 'Outer edges'}
+                    title={kind === 'inner' ? t('edit.tierInnerEdges') : t('edit.tierOuterEdges')}
                     accent
                     effect={layer?.effect ?? defaultEdgeEffect}
                     config={layer?.config ?? defaultEdgeConfig}
@@ -137,7 +139,7 @@ export default function CanvasEditUi({
 
         {pieceSelected && (
           <FloatingPanel
-            title={`Piece · ${selectedPiece.label || selectedPiece.id}`}
+            title={t('edit.piecePanelTitle', { label: selectedPiece.label || selectedPiece.id })}
             placement="top-right"
             onClose={onClearPieceSelection}
           >
@@ -160,7 +162,7 @@ export default function CanvasEditUi({
 
         {!pieceSelected && edgeSelected && (
           <FloatingPanel
-            title={selectedEdges.size === 1 ? 'Edge' : `${selectedEdges.size} edges`}
+            title={t('edit.edgesPanelTitle', { n: selectedEdges.size })}
             placement="top-right"
             onClose={onClearEdgeSelection}
           >

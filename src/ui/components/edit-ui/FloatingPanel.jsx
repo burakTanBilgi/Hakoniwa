@@ -1,4 +1,5 @@
 import Icon from '../Icon.jsx';
+import { useT } from '../../../i18n/index.js';
 
 // Shared shell for the Canvas-mode popovers (PiecePopover / EdgePopover /
 // DefaultsDrawer). A small floating card with a title row, a close
@@ -16,6 +17,7 @@ export default function FloatingPanel({
   onClose,
   children,
 }) {
+  const t = useT();
   return (
     <div
       className={`floating-panel floating-panel--${placement}`}
@@ -29,7 +31,7 @@ export default function FloatingPanel({
             type="button"
             className="floating-panel__close"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t('common.close')}
           >
             <Icon name="close" size={12} />
           </button>

@@ -4,6 +4,7 @@ import EdgeTierEditor from '../inspector/EdgeTierEditor.jsx';
 import ProjectDefaultsCard from '../inspector/ProjectDefaultsCard.jsx';
 import { SubcardAccordion } from '../inspector/SubcardAccordionContext.jsx';
 import { DEFAULT_WAVE } from '../edges/constants.js';
+import { useT } from '../../../i18n/index.js';
 
 // Properties pane for the Layers Edit UI: a thin dispatcher that
 // renders the right tier editor for the currently-focused layer row.
@@ -25,7 +26,8 @@ export default function PropertiesPane({
   setPieceContent, updatePieceContent,
   setDefaultCellEffects, setCellEffects,
 }) {
-  if (!focus) return <p className="hint properties-pane__hint">Pick a layer.</p>;
+  const t = useT();
+  if (!focus) return <p className="hint properties-pane__hint">{t('edit.pickALayer')}</p>;
 
   const edges = project.edges;
   const defaultEdgeEffect  = edges.default.effect;
@@ -50,7 +52,7 @@ export default function PropertiesPane({
     return (
       <SubcardAccordion id={kind} defaultOpenId="shape-stroke">
         <EdgeTierEditor
-          title={kind === 'inner' ? 'Inner edges' : 'Outer edges'}
+          title={kind === 'inner' ? t('edit.tierInnerEdges') : t('edit.tierOuterEdges')}
           accent
           effect={layer?.effect ?? defaultEdgeEffect}
           config={layer?.config ?? defaultEdgeConfig}
@@ -68,7 +70,7 @@ export default function PropertiesPane({
 
   if (focus.kind === 'piece') {
     const piece = pieces.find((p) => p.id === focus.id);
-    if (!piece) return <p className="hint properties-pane__hint">Piece not found.</p>;
+    if (!piece) return <p className="hint properties-pane__hint">{t('edit.pieceNotFound')}</p>;
     return (
       <PieceInspector
         piece={piece}

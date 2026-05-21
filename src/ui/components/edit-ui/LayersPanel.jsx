@@ -1,11 +1,13 @@
 import Icon from '../Icon.jsx';
+import { useT } from '../../../i18n/index.js';
 
 // Vertical list of layer rows. Each row's selection state comes from
 // the parent: `activeRowId` is the row currently shown in the property
 // pane. Section rows are non-interactive headings.
 export default function LayersPanel({ rows, activeRowId, onPickRow }) {
+  const t = useT();
   return (
-    <nav className="layers-panel" aria-label="Layers">
+    <nav className="layers-panel" aria-label={t('editUi.layersPanelAriaLabel')}>
       <ul className="layers-panel__list">
         {rows.map((r) => {
           if (r.kind === 'section') {

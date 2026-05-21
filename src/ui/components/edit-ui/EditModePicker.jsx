@@ -3,13 +3,14 @@ import { createPortal } from 'react-dom';
 import Icon from '../Icon.jsx';
 import Tooltip from '../Tooltip.jsx';
 import { ThumbCanvas, ThumbLayers, ThumbFlat, ThumbModes } from './preview-thumbs.jsx';
+import { useT } from '../../../i18n/index.js';
 import './EditModePicker.css';
 
-const MODES = [
-  { id: 'canvas', label: 'Canvas',   blurb: 'Float popovers over the canvas; minimal nav rail.',                Thumb: ThumbCanvas, soon: false },
-  { id: 'layers', label: 'Layers',   blurb: 'A list of every override + a property pane below.',                Thumb: ThumbLayers, soon: false },
-  { id: 'flat',   label: 'Flat',     blurb: 'One panel, one "apply to" scope pill drives every change.',         Thumb: ThumbFlat,   soon: false },
-  { id: 'modes',  label: 'Workflow', blurb: 'Switch the whole UI by task: connect / paint / animate.',          Thumb: ThumbModes,  soon: false },
+const MODE_DEFS = [
+  { id: 'canvas', labelKey: 'editUi.modeCanvas', blurbKey: 'editUi.modeCanvasBlurb', Thumb: ThumbCanvas, soon: false },
+  { id: 'layers', labelKey: 'editUi.modeLayers', blurbKey: 'editUi.modeLayersBlurb', Thumb: ThumbLayers, soon: false },
+  { id: 'flat',   labelKey: 'editUi.modeFlat',   blurbKey: 'editUi.modeFlatBlurb',   Thumb: ThumbFlat,   soon: false },
+  { id: 'modes',  labelKey: 'editUi.modeWorkflow',blurbKey: 'editUi.modeWorkflowBlurb',Thumb: ThumbModes, soon: false },
 ];
 
 const POP_W = 304;
@@ -22,6 +23,8 @@ const VIEWPORT_PAD = 12;
 // rail or the nav-rail). Auto-flips above the button when there's no
 // room below.
 export default function EditModePicker({ mode, onChangeMode, tiles, onChangeTiles }) {
+  const t = useT();
+  const MODES = MODE_DEFS.map((m) => ({ ...m, label: t(m.labelKey), blurb: t(m.blurbKey) }));
   const [open, setOpen] = useState(false);
   const btnRef = useRef(null);
   const popRef = useRef(null);
@@ -81,13 +84,13 @@ export default function EditModePicker({ mode, onChangeMode, tiles, onChangeTile
 
   return (
     <>
-      <Tooltip label={`Layout: ${activeMode.label} (click to switch)`} side="right" disabled={open}>
+      <Tooltip label={t('editUi.modePickerTooltip', { label: activeMode.label })} side="right" disabled={open}>
         <button
           ref={btnRef}
           type="button"
           className={`mode-picker__btn${open ? ' mode-picker__btn--open' : ''}`}
           onClick={() => setOpen((v) => !v)}
-          aria-label={`Switch Edit layout (current: ${activeMode.label})`}
+          aria-label={t('editUi.switchLayoutAriaLabel', { label: activeMode.label })}
           aria-expanded={open}
           aria-haspopup="dialog"
         >
@@ -100,12 +103,12 @@ export default function EditModePicker({ mode, onChangeMode, tiles, onChangeTile
           ref={popRef}
           className={`mode-picker__pop${coords.flip ? ' mode-picker__pop--up' : ''}`}
           role="dialog"
-          aria-label="Edit layouts"
+          aria-label={t('editUi.editLayoutsDialog')}
           style={{ top: coords.top, left: coords.left, width: POP_W }}
         >
           <div className="mode-picker__header">
-            <p className="mode-picker__kicker">layout</p>
-            <h3 className="mode-picker__heading">Choose how you edit</h3>
+            <p className="mode-picker__kicker">{t('editUi.modePickerKicker')}</p>
+            <h3 className="mode-picker__heading">{t('editUi.modePickerHeading')}</h3>
           </div>
 
           <ul className="mode-picker__list">
@@ -122,7 +125,7 @@ export default function EditModePicker({ mode, onChangeMode, tiles, onChangeTile
                   <span className="mode-picker__text">
                     <span className="mode-picker__name">
                       <span>{m.label}</span>
-                      {m.soon && <span className="mode-picker__soon">soon</span>}
+                      {m.soon && <span className="mode-picker__soon">{t('editUi.modeSoon')}</span>}
                       {mode === m.id && !m.soon && <span className="mode-picker__current" aria-hidden="true">●</span>}
                     </span>
                     <span className="mode-picker__blurb">{m.blurb}</span>
@@ -139,8 +142,8 @@ export default function EditModePicker({ mode, onChangeMode, tiles, onChangeTile
               onChange={(e) => onChangeTiles(e.target.checked)}
             />
             <span className="mode-picker__toggle-label">
-              <span>Preset tiles instead of sliders</span>
-              <span className="mode-picker__toggle-hint">apply globally</span>
+              <span>{t('editUi.tilesLabel')}</span>
+              <span className="mode-picker__toggle-hint">{t('editUi.tilesHint')}</span>
             </span>
           </label>
         </div>,

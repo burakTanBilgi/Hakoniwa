@@ -6,6 +6,7 @@ import Icon from '../Icon.jsx';
 import Tooltip from '../Tooltip.jsx';
 import { piecesOfEdge } from '../../../grid/compile.js';
 import { DEFAULT_WAVE } from '../edges/constants.js';
+import { useT } from '../../../i18n/index.js';
 import './FlatEditUi.css';
 
 // Flat-panel Edit UI (Direction B). One scrollable panel, no tier
@@ -17,15 +18,17 @@ import './FlatEditUi.css';
 // Compared to the layered Inspector this trades the cascade-strip + per-
 // tier accordion for one fixed panel; the scope is now a property of
 // the panel, not a navigation step.
-const ALL_SCOPES = [
-  { id: 'default', label: 'Default' },
-  { id: 'inner',   label: 'Inner'   },
-  { id: 'outer',   label: 'Outer'   },
-  { id: 'piece',   label: 'Piece'   },
-  { id: 'edge',    label: 'Edge'    },
-];
+const ALL_SCOPE_IDS = ['default', 'inner', 'outer', 'piece', 'edge'];
 
 export default function FlatEditUi(props) {
+  const t = useT();
+  const ALL_SCOPES = [
+    { id: 'default', label: t('edit.tierDefault') },
+    { id: 'inner',   label: t('edit.tierInner')   },
+    { id: 'outer',   label: t('edit.tierOuter')   },
+    { id: 'piece',   label: t('edit.tierPiece')   },
+    { id: 'edge',    label: t('edit.tierEdge')     },
+  ];
   const {
     project,
     pieces,
@@ -84,7 +87,7 @@ export default function FlatEditUi(props) {
   const editorProps = useMemo(() => {
     if (scope === 'default') {
       return {
-        title: 'Default',
+        title: t('edit.tierDefault'),
         effect: defaultEdgeEffect,
         config: defaultEdgeConfig,
         ownEffects: defaultEdgeEffects,
@@ -99,7 +102,7 @@ export default function FlatEditUi(props) {
       const kind = scope;
       const layer = edges[kind];
       return {
-        title: kind === 'inner' ? 'Inner edges' : 'Outer edges',
+        title: kind === 'inner' ? t('edit.tierInnerEdges') : t('edit.tierOuterEdges'),
         effect: layer?.effect ?? defaultEdgeEffect,
         config: layer?.config ?? defaultEdgeConfig,
         ownEffects: layer?.effects || {},
@@ -113,7 +116,7 @@ export default function FlatEditUi(props) {
     if (scope === 'piece' && pieceTargetId) {
       const cell = edges.byPiece?.[pieceTargetId] || null;
       return {
-        title: `Piece · ${pieceTargetId}`,
+        title: t('edit.piecePanelTitle', { label: pieceTargetId }),
         effect: cell?.effect ?? defaultEdgeEffect,
         config: cell?.config ?? defaultEdgeConfig,
         ownEffects: cell?.effects || {},
@@ -127,7 +130,7 @@ export default function FlatEditUi(props) {
     if (scope === 'edge' && firstPairKey) {
       const ov = edges.byEdge?.[firstPairKey] || null;
       return {
-        title: 'Edge',
+        title: t('edit.tierEdge'),
         effect: ov?.effect ?? defaultEdgeEffect,
         config: ov?.config ?? defaultEdgeConfig,
         ownEffects: ov?.effects || {},
@@ -165,23 +168,23 @@ export default function FlatEditUi(props) {
 
   // Selection label for the header.
   const selectionLabel =
-    edgeSelected ? (selectedEdges.size === 1 ? 'an edge' : `${selectedEdges.size} edges`) :
-    pieceSelected ? `piece ${selectedPiece?.label || pieceTargetId}` :
-    'nothing';
+    edgeSelected ? t('edit.edgesPanelTitle', { n: selectedEdges.size }) :
+    pieceSelected ? `${t('edit.tierPiece')} ${selectedPiece?.label || pieceTargetId}` :
+    t('edit.selectionNone');
 
   return (
     <div className="flat-edit-ui">
       <header className="flat-edit-ui__head">
         <div>
-          <p className="flat-edit-ui__kicker">Selection</p>
+          <p className="flat-edit-ui__kicker">{t('edit.selectionKicker')}</p>
           <p className="flat-edit-ui__selection">{selectionLabel}</p>
         </div>
         {(pieceSelected || edgeSelected) && (
-          <Tooltip label="Clear selection">
+          <Tooltip label={t('edit.clearSelection')}>
             <button
               type="button"
               className="icon-action-btn"
-              aria-label="Clear selection"
+              aria-label={t('edit.clearSelection')}
               onClick={() => {
                 if (pieceSelected) onClearPieceSelection?.();
                 if (edgeSelected)  onClearEdgeSelection?.();
@@ -193,8 +196,8 @@ export default function FlatEditUi(props) {
         )}
       </header>
 
-      <div className="flat-edit-ui__scope" role="radiogroup" aria-label="Apply changes to">
-        <span className="flat-edit-ui__scope-label">Apply to</span>
+      <div className="flat-edit-ui__scope" role="radiogroup" aria-label={t('edit.applyChangesTo')}>
+        <span className="flat-edit-ui__scope-label">{t('edit.applyTo')}</span>
         <div className="flat-edit-ui__scope-pills">
           {ALL_SCOPES.map((s) => {
             const applicable = scopeApplicable(s.id);
@@ -236,7 +239,7 @@ export default function FlatEditUi(props) {
           )}
 
           {!editorProps && (
-            <p className="hint">No applicable scope. Pick a piece or edge on the canvas.</p>
+            <p className="hint">{t('edit.noApplicableScope')}</p>
           )}
         </SubcardAccordion>
       </div>

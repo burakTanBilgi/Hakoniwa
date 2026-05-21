@@ -14,6 +14,7 @@ import EditModePicker  from '../components/edit-ui/EditModePicker.jsx';
 import { useEditUiMode } from '../hooks/useEditUiMode.js';
 import { useMediaQuery } from '../hooks/useMediaQuery.js';
 import { TilesContext } from '../hooks/TilesContext.jsx';
+import { useT } from '../../i18n/index.js';
 
 const DEFAULT_WAVE = { frequency: 0.025, amplitude: 12, phase: 0 };
 
@@ -27,6 +28,7 @@ const DEFAULT_WAVE = { frequency: 0.025, amplitude: 12, phase: 0 };
 // confirm-clear modal. Each shell receives the same props and decides
 // how to render them.
 export default function EditPage({ project }) {
+  const t = useT();
   const {
     project: p,
     pieces,
@@ -211,16 +213,14 @@ export default function EditPage({ project }) {
 
       {confirmClearOpen && (
         <ConfirmDialog
-          title="Clear all overrides?"
+          title={t('edit.confirmClearTitle')}
           body={(
             <>
-              <p>This will wipe every per-edge, per-piece, inner, and outer
-              override along with every per-piece body animation, and fall
-              back to the project defaults.</p>
-              <p className="hint hint--warn">This action cannot be undone.</p>
+              <p>{t('edit.confirmClearBody')}</p>
+              <p className="hint hint--warn">{t('edit.confirmClearWarn')}</p>
             </>
           )}
-          confirmLabel="Clear overrides"
+          confirmLabel={t('edit.confirmClearLabel')}
           danger
           onCancel={() => setConfirmClearOpen(false)}
           onConfirm={handleConfirmClear}
@@ -253,16 +253,17 @@ function TopActionRow({
   hasOverrides, onClearOverrides,
   modePickerSlot,
 }) {
+  const t = useT();
   return (
     <div className="edit-top-row">
-      <div className="fx-toggle-group" role="group" aria-label="Interaction previews">
-        <Tooltip label={`Hover previews: ${hoverFxEnabled ? 'on' : 'off'}`}>
+      <div className="fx-toggle-group" role="group" aria-label={t('edit.interactionPreviewsGroup')}>
+        <Tooltip label={hoverFxEnabled ? t('edit.hoverPreviewsOn') : t('edit.hoverPreviewsOff')}>
           <button
             type="button"
             className={`fx-icon-btn${hoverFxEnabled ? '' : ' fx-icon-btn--off'}`}
             onClick={onToggleHover}
             aria-pressed={hoverFxEnabled}
-            aria-label="Toggle hover previews"
+            aria-label={t('edit.toggleHoverPreviews')}
           >
             <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
               <path d="M3 2 L3 11 L6 8 L8 12 L9.4 11.4 L7.4 8 L11 8 Z" fill="currentColor" />
@@ -270,13 +271,13 @@ function TopActionRow({
             </svg>
           </button>
         </Tooltip>
-        <Tooltip label={`Click previews: ${clickFxEnabled ? 'on' : 'off'}`}>
+        <Tooltip label={clickFxEnabled ? t('edit.clickPreviewsOn') : t('edit.clickPreviewsOff')}>
           <button
             type="button"
             className={`fx-icon-btn${clickFxEnabled ? '' : ' fx-icon-btn--off'}`}
             onClick={onToggleClick}
             aria-pressed={clickFxEnabled}
-            aria-label="Toggle click previews"
+            aria-label={t('edit.toggleClickPreviews')}
           >
             <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
               <path d="M3 2 L3 11 L6 8 L8 12 L9.4 11.4 L7.4 8 L11 8 Z" fill="currentColor" />
@@ -289,13 +290,13 @@ function TopActionRow({
           </button>
         </Tooltip>
       </div>
-      <Tooltip label={hasOverrides ? 'Clear all overrides' : 'No overrides set'}>
+      <Tooltip label={hasOverrides ? t('edit.clearAllOverrides') : t('edit.noOverridesSet')}>
         <button
           type="button"
           className="clear-overrides-btn"
           onClick={onClearOverrides}
           disabled={!hasOverrides}
-          aria-label="Clear all overrides"
+          aria-label={t('edit.clearAllOverrides')}
         >
           <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
             <path d="M3 8 A5 5 0 1 0 5.2 4" />
@@ -335,6 +336,7 @@ function LayersShell(props) {
 // changes, so a user who drags the sheet down to peek the canvas
 // keeps it there until they make another selection change.
 function MobileShell(props) {
+  const t = useT();
   const { canvas, project, pieces, sharedEdges,
     selectedEdges, selectedPieceId,
     onClearEdgeSelection, onClearPieceSelection,
@@ -362,7 +364,7 @@ function MobileShell(props) {
       <div className="page-edit__mobile-canvas">{canvas}</div>
       <BottomSheet
         open
-        title="Edit"
+        title={t('nav.edit')}
         snap={snap}
         onSnapChange={setSnap}
         defaultSnap="collapsed"
@@ -376,8 +378,8 @@ function MobileShell(props) {
               />
             </svg>
             <div className="mobile-edit-hint__text">
-              <strong>Tap a piece or edge</strong>
-              <span>to edit it. Or tweak project defaults below.</span>
+              <strong>{t('edit.mobileTapHint')}</strong>
+              <span>{t('edit.mobileTapHintSub')}</span>
             </div>
           </div>
         )}

@@ -6,6 +6,7 @@ import CellTierEditor from '../inspector/CellTierEditor.jsx';
 import { SubcardAccordion } from '../inspector/SubcardAccordionContext.jsx';
 import { piecesOfEdge } from '../../../grid/compile.js';
 import { DEFAULT_WAVE } from '../edges/constants.js';
+import { useT } from '../../../i18n/index.js';
 import './WorkflowEditUi.css';
 
 // Curated palette duplicated from GridEditorPage. Could be hoisted to a
@@ -15,32 +16,34 @@ const PALETTE = [
   '#5fb68f', '#7fc9a6', '#5b8c85', '#6b9bd1', '#a3a3a3',
 ];
 
-const TASKS = [
-  { id: 'connect', icon: 'eff-puzzle',     label: 'Connect', blurb: 'Pick an edge shape.'   },
-  { id: 'paint',   icon: 'prop-color',     label: 'Paint',   blurb: 'Color your pieces.'    },
-  { id: 'animate', icon: 'anim-highlight', label: 'Animate', blurb: 'Add hover & click effects.' },
+const TASK_DEFS = [
+  { id: 'connect', icon: 'eff-puzzle',     labelKey: 'editUi.taskConnect', blurbKey: 'editUi.taskConnectBlurb' },
+  { id: 'paint',   icon: 'prop-color',     labelKey: 'editUi.taskPaint',   blurbKey: 'editUi.taskPaintBlurb'   },
+  { id: 'animate', icon: 'anim-highlight', labelKey: 'editUi.taskAnimate', blurbKey: 'editUi.taskAnimateBlurb' },
 ];
 
 // Workflow Edit UI (Direction C). Switches the entire panel by task,
 // not by selection. Three modes — Connect / Paint / Animate — each
 // shows only the controls relevant to its job. The canvas is shared.
 export default function WorkflowEditUi(props) {
+  const t = useT();
+  const TASKS = TASK_DEFS.map((td) => ({ ...td, label: t(td.labelKey), blurb: t(td.blurbKey) }));
   const [task, setTask] = useState('connect');
   return (
     <div className="workflow-edit-ui">
-      <div className="workflow-edit-ui__strip" role="tablist" aria-label="Edit task">
-        {TASKS.map((t) => (
-          <Tooltip key={t.id} label={t.blurb}>
+      <div className="workflow-edit-ui__strip" role="tablist" aria-label={t('editUi.editTaskAriaLabel')}>
+        {TASKS.map((td) => (
+          <Tooltip key={td.id} label={td.blurb}>
             <button
               type="button"
               role="tab"
-              aria-selected={task === t.id}
-              aria-label={t.label}
-              className={`workflow-tab${task === t.id ? ' workflow-tab--active' : ''}`}
-              onClick={() => setTask(t.id)}
+              aria-selected={task === td.id}
+              aria-label={td.label}
+              className={`workflow-tab${task === td.id ? ' workflow-tab--active' : ''}`}
+              onClick={() => setTask(td.id)}
             >
-              <Icon name={t.icon} size={14} />
-              <span className="workflow-tab__label">{t.label}</span>
+              <Icon name={td.icon} size={14} />
+              <span className="workflow-tab__label">{td.label}</span>
             </button>
           </Tooltip>
         ))}
@@ -64,6 +67,7 @@ function ConnectTask({
   setPieceEdgeEffect, setPieceEdgeConfig, setPieceEdgeEffects, clearPieceEdgeOverride,
   setEdgeEffect, setEdgeConfig, clearEdgeOverride, setEdgeEffects,
 }) {
+  const t = useT();
   const edges = project.edges;
   const defaultEdgeEffect  = edges.default.effect;
   const defaultEdgeConfig  = edges.default.config ?? DEFAULT_WAVE;
@@ -80,10 +84,10 @@ function ConnectTask({
   if (scope === 'edge') {
     const ov = edges.byEdge?.[firstPairKey] || null;
     return (
-      <EditorWrapper kicker="this edge" body={
+      <EditorWrapper kicker={t('editUi.connectEdgeKicker')} body={
         <SubcardAccordion id="workflow-connect-edge" defaultOpenId="shape-stroke">
           <EdgeTierEditor
-            title="Edge" accent
+            title={t('edit.tierEdge')} accent
             effect={ov?.effect ?? defaultEdgeEffect}
             config={ov?.config ?? defaultEdgeConfig}
             ownEffects={ov?.effects || {}}
@@ -100,10 +104,10 @@ function ConnectTask({
   if (scope === 'piece') {
     const cell = edges.byPiece?.[pieceId] || null;
     return (
-      <EditorWrapper kicker="this piece's edges" body={
+      <EditorWrapper kicker={t('editUi.connectPieceKicker')} body={
         <SubcardAccordion id="workflow-connect-piece" defaultOpenId="shape-stroke">
           <EdgeTierEditor
-            title="Piece" accent
+            title={t('edit.tierPiece')} accent
             effect={cell?.effect ?? defaultEdgeEffect}
             config={cell?.config ?? defaultEdgeConfig}
             ownEffects={cell?.effects || {}}
@@ -118,10 +122,10 @@ function ConnectTask({
     );
   }
   return (
-    <EditorWrapper kicker="every edge by default" body={
+    <EditorWrapper kicker={t('editUi.connectDefaultKicker')} body={
       <SubcardAccordion id="workflow-connect-default" defaultOpenId="shape-stroke">
         <EdgeTierEditor
-          title="Default" accent
+          title={t('edit.tierDefault')} accent
           effect={defaultEdgeEffect}
           config={defaultEdgeConfig}
           ownEffects={defaultEdgeEffects}
@@ -131,13 +135,14 @@ function ConnectTask({
           onChangeEffects={setDefaultEdgeEffects}
         />
       </SubcardAccordion>
-    } hint="Pick an edge or piece on the canvas to scope these changes." />
+    } hint={t('editUi.connectDefaultHint')} />
   );
 }
 
 // === Paint — pick a color ======================================
 
 function PaintTask({ project, selectedPieceId, selectedEdges, setPieceColor }) {
+  const t = useT();
   const currentColor = selectedPieceId ? (project.pieceColors?.[selectedPieceId] ?? null) : null;
   const hasSelection = !!selectedPieceId && !(selectedEdges?.size > 0);
   const setColor = (c) => {
@@ -147,22 +152,22 @@ function PaintTask({ project, selectedPieceId, selectedEdges, setPieceColor }) {
 
   return (
     <EditorWrapper
-      kicker={hasSelection ? 'painting this piece' : 'pick a piece first'}
+      kicker={hasSelection ? t('editUi.paintKickerSelected') : t('editUi.paintKickerEmpty')}
       body={
         <div className="paint-task">
           {!hasSelection && (
             <p className="hint">
-              Click a piece on the canvas to select it, then pick a color below.
+              {t('editUi.paintHint')}
             </p>
           )}
           <div className="color-grid">
-            <Tooltip label="Clear color">
+            <Tooltip label={t('grid.clearColorLabel')}>
               <button
                 type="button"
                 className={`color-swatch color-swatch--clear${currentColor == null ? ' color-swatch--active' : ''}`}
                 onClick={() => setColor(null)}
                 disabled={!hasSelection}
-                aria-label="Clear color"
+                aria-label={t('grid.clearColorLabel')}
               />
             </Tooltip>
             {PALETTE.map((c) => (
@@ -173,11 +178,11 @@ function PaintTask({ project, selectedPieceId, selectedEdges, setPieceColor }) {
                   style={{ background: c }}
                   onClick={() => setColor(c)}
                   disabled={!hasSelection}
-                  aria-label={`Color ${c}`}
+                  aria-label={t('grid.colorAriaLabel', { c })}
                 />
               </Tooltip>
             ))}
-            <Tooltip label="Custom color">
+            <Tooltip label={t('grid.customColor')}>
               <label className="color-swatch color-swatch--custom">
                 <input
                   type="color"
@@ -202,6 +207,7 @@ function AnimateTask({
   setPieceEdgeEffects, clearPieceEdgeOverride,
   setCellEffects,
 }) {
+  const t = useT();
   const edges = project.edges;
   const defaultEdgeEffects = edges.default.effects || {};
   const defaultCellEffects = project?.cells?.default?.effects || {};
@@ -210,10 +216,10 @@ function AnimateTask({
 
   if (selectedPieceId) {
     return (
-      <EditorWrapper kicker="this piece's effects" body={
+      <EditorWrapper kicker={t('editUi.animatePieceKicker')} body={
         <SubcardAccordion id="workflow-animate-piece" defaultOpenId="animations">
           <EdgeTierEditor
-            title="Edge effects on this piece"
+            title={t('editUi.animateEdgeEffectsTitle')}
             accent
             strokeHidden
             ownEffects={pieceEdgeEffects}
@@ -222,7 +228,7 @@ function AnimateTask({
             onClear={edges.byPiece?.[selectedPieceId] ? () => clearPieceEdgeOverride(selectedPieceId) : null}
           />
           <CellTierEditor
-            title="This piece's body"
+            title={t('editUi.animatePieceBodyTitle')}
             accent
             ownEffects={pieceCellEffects}
             inheritedEffects={defaultCellEffects}
@@ -234,10 +240,10 @@ function AnimateTask({
   }
 
   return (
-    <EditorWrapper kicker="project-wide effects" body={
+    <EditorWrapper kicker={t('editUi.animateDefaultKicker')} body={
       <SubcardAccordion id="workflow-animate-default" defaultOpenId="animations">
         <EdgeTierEditor
-          title="Default edges"
+          title={t('editUi.animateDefaultEdgesTitle')}
           accent
           strokeHidden
           ownEffects={defaultEdgeEffects}
@@ -245,14 +251,14 @@ function AnimateTask({
           onChangeEffects={setDefaultEdgeEffects}
         />
         <CellTierEditor
-          title="Default body"
+          title={t('editUi.animateDefaultBodyTitle')}
           accent
           ownEffects={defaultCellEffects}
           inheritedEffects={{}}
           onChange={setDefaultCellEffects}
         />
       </SubcardAccordion>
-    } hint="Pick a piece on the canvas to scope these effects to it." />
+    } hint={t('editUi.animateDefaultHint')} />
   );
 }
 
