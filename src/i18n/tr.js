@@ -80,6 +80,12 @@ export default {
   'common.close': 'Kapat',
   'common.import': 'İçe Aktar',
   'common.delete': 'Sil',
+  'common.fitCover': 'Doldur',
+  'common.fitContain': 'Sığdır',
+  'common.fitStretch': 'Uzat',
+  'common.fitHintCover': 'Doldur, kırpabilir',
+  'common.fitHintContain': 'Tüm resmi sığdır',
+  'common.fitHintStretch': 'Sınırlara uzat',
 
   // hatalar
   'errors.importFailed': 'İçe aktarılamadı: {detail}',
@@ -116,8 +122,11 @@ export default {
   'grid.readFileFailed': 'Dosya okunamadı: {detail}',
   'grid.tip1': 'Kutu seçimi için herhangi bir hücreden sürükleyin.',
   'grid.tip2': 'Tek tek hücre eklemek veya çıkarmak için Shift ile tıklayın.',
+  'grid.tip3': 'Silmek için bir satır/sütun numarasına tıklayın. Toplu silmek için birden fazla üzerinde sürükleyin.',
   'grid.tip4': 'Birleştirilmiş gruplar boyutlarını gösterir.',
   'grid.tip5': 'Doğrudan yazmak için herhangi bir sayı değerine tıklayın.',
+  'grid.tip6': 'Yakınlaştırmak için kaydırın; kaydırmak için orta tıklama veya Ctrl+sürükleme kullanın. Dokunmatik ekranda kıstırma ve sürükleme yapın.',
+  'grid.tip7': 'Hücreleri seçin, ardından bir resim yapıştırın (Ctrl+V) ve seçim boyunca yayın.',
 
   // ızgara tuvali
   'grid.deleteColumn': 'Sütun {n}\'i silmek için tıklayın',

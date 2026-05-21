@@ -333,11 +333,11 @@ export default function GridEditorPage({ project }) {
           <ul className="tip-list">
             <li>{t('grid.tip1')}</li>
             <li>{t('grid.tip2')}</li>
-            <li><strong>Click a row/column number</strong> to delete it. Drag across multiple to delete in bulk.</li>
+            <li>{t('grid.tip3')}</li>
             <li>{t('grid.tip4')}</li>
             <li>{t('grid.tip5')}</li>
-            <li><strong>Scroll</strong> to zoom; middle-drag or Ctrl+drag to pan. On touch, pinch and drag.</li>
-            <li>Select cells, then <strong>paste an image</strong> (Ctrl+V) to span it across them.</li>
+            <li>{t('grid.tip6')}</li>
+            <li>{t('grid.tip7')}</li>
           </ul>
         </AccordionCard>
     </>

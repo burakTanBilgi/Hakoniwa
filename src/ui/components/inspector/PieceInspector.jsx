@@ -293,15 +293,19 @@ function ContentTab({ piece, setPieceContent, updatePieceContent }) {
               <div className="form-row">
                 <label className="form-row__label">{t('inspector.content.fitLabel')}</label>
                 <div className="effect-chips">
-                  {FIT_OPTIONS.map((f) => (
-                    <Tooltip key={f.value} label={f.hint}>
-                      <button type="button"
-                        className={`chip chip--sm ${(content.fit || 'cover') === f.value ? 'chip--active' : ''}`}
-                        onClick={() => updatePieceContent(piece.id, { fit: f.value })}>
-                        {f.label}
-                      </button>
-                    </Tooltip>
-                  ))}
+                  {FIT_OPTIONS.map((f) => {
+                    const labelKey = f.value === 'fill' ? 'common.fitStretch' : f.value === 'contain' ? 'common.fitContain' : 'common.fitCover';
+                    const hintKey  = f.value === 'fill' ? 'common.fitHintStretch' : f.value === 'contain' ? 'common.fitHintContain' : 'common.fitHintCover';
+                    return (
+                      <Tooltip key={f.value} label={t(hintKey)}>
+                        <button type="button"
+                          className={`chip chip--sm ${(content.fit || 'cover') === f.value ? 'chip--active' : ''}`}
+                          onClick={() => updatePieceContent(piece.id, { fit: f.value })}>
+                          {t(labelKey)}
+                        </button>
+                      </Tooltip>
+                    );
+                  })}
                 </div>
               </div>
             </>

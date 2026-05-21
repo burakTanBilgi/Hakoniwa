@@ -60,17 +60,21 @@ export default function BackgroundsPanel({
                     </Tooltip>
                   </div>
                   <div className="effect-chips">
-                    {FIT_OPTIONS.map((f) => (
-                      <Tooltip key={f.value} label={f.hint}>
-                        <button
-                          type="button"
-                          className={`chip chip--sm ${(bg.fit || 'cover') === f.value ? 'chip--active' : ''}`}
-                          onClick={() => onUpdate(bg.id, { fit: f.value })}
-                        >
-                          {f.label}
-                        </button>
-                      </Tooltip>
-                    ))}
+                    {FIT_OPTIONS.map((f) => {
+                      const labelKey = f.value === 'fill' ? 'common.fitStretch' : f.value === 'contain' ? 'common.fitContain' : 'common.fitCover';
+                      const hintKey  = f.value === 'fill' ? 'common.fitHintStretch' : f.value === 'contain' ? 'common.fitHintContain' : 'common.fitHintCover';
+                      return (
+                        <Tooltip key={f.value} label={t(hintKey)}>
+                          <button
+                            type="button"
+                            className={`chip chip--sm ${(bg.fit || 'cover') === f.value ? 'chip--active' : ''}`}
+                            onClick={() => onUpdate(bg.id, { fit: f.value })}
+                          >
+                            {t(labelKey)}
+                          </button>
+                        </Tooltip>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

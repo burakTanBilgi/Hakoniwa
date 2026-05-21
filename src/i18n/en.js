@@ -81,6 +81,12 @@ export default {
   'common.close': 'Close',
   'common.import': 'Import',
   'common.delete': 'Delete',
+  'common.fitCover': 'Cover',
+  'common.fitContain': 'Contain',
+  'common.fitStretch': 'Stretch',
+  'common.fitHintCover': 'Fill, may crop',
+  'common.fitHintContain': 'Fit whole image',
+  'common.fitHintStretch': 'Stretch to bounds',
 
   // errors
   'errors.importFailed': 'Could not import: {detail}',
@@ -117,8 +123,11 @@ export default {
   'grid.readFileFailed': 'Could not read file: {detail}',
   'grid.tip1': 'Drag from any cell to box-select.',
   'grid.tip2': 'Shift-click to add or remove individual cells.',
+  'grid.tip3': 'Click a row/column number to delete it. Drag across multiple to delete in bulk.',
   'grid.tip4': 'Merged groups show their dimensions.',
   'grid.tip5': 'Click any number value to type it directly.',
+  'grid.tip6': 'Scroll to zoom; middle-drag or Ctrl+drag to pan. On touch, pinch and drag.',
+  'grid.tip7': 'Select cells, then paste an image (Ctrl+V) to span it across them.',
 
   // grid canvas
   'grid.deleteColumn': 'Click to delete column {n}',
