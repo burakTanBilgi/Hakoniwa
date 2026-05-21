@@ -13,7 +13,8 @@ before changing a feature it covers.
 
 - [`docs/design-system.md`](docs/design-system.md) — visual language, tokens, components
 - [`docs/adaptive-edit-ui-design.md`](docs/adaptive-edit-ui-design.md) — the four Edit-UI layout modes
-- [`docs/multi-language-support-design.md`](docs/multi-language-support-design.md) — i18n (English + Turkish)
+- [`docs/multi-language-support-design.md`](docs/multi-language-support-design.md) — i18n (English + Turkish) spec
+- [`docs/multi-language-support-plan.md`](docs/multi-language-support-plan.md) — i18n implementation plan
 
 ## Architecture
 
